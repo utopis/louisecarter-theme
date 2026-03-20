@@ -32,6 +32,29 @@
 
   {{ content_for_header }}
 
+  {%- comment -%} Tailwind CSS CDN for utility classes {%- endcomment -%}
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'lc-brown': '#4f3c2f',
+            'lc-taupe': '#ab9379',
+            'lc-cream': '#faf7f4',
+            'lc-gold': '#c9a96e',
+            'lc-warm': '#f5efe8',
+            'lc-dark': '#2a1f17',
+          },
+          fontFamily: {
+            'display': ['Fraunces', 'serif'],
+            'body': ['Jost', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
   <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
 
   <style>
