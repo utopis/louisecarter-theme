@@ -1,0 +1,1602 @@
+{% comment %}
+  Main Bundle Builder Section
+  Template: collection.bundle.json
+  Brand: Louise Carter — Waterproof Jewelry
+{% endcomment %}
+
+{%- liquid
+  assign bundle_price = section.settings.bundle_price | default: 85
+  assign bundle_size = section.settings.bundle_size | default: 7
+  assign hero_heading = section.settings.hero_heading | default: 'Build Your Bundle'
+  assign hero_subheading = section.settings.hero_subheading | default: 'Pick any 7 pieces for just $85'
+-%}
+
+<style>
+  /* ============================================
+     BUNDLE BUILDER — Louise Carter
+     ============================================ */
+
+  :root {
+    --lc-brown: #4f3c2f;
+    --lc-taupe: #ab9379;
+    --lc-cream: #faf7f4;
+    --lc-gold: #c9a96e;
+    --lc-warm: #f5efe8;
+    --lc-dark: #2a1f17;
+    --lc-green: #2d8a4e;
+    --lc-green-light: #e8f5ed;
+  }
+
+  .bundle-section * {
+    box-sizing: border-box;
+  }
+
+  .bundle-section {
+    font-family: 'Jost', sans-serif;
+    color: var(--lc-dark);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---- Hero ---- */
+
+  .bundle-hero {
+    background: var(--lc-cream);
+    text-align: center;
+    padding: 56px 24px 48px;
+  }
+
+  .bundle-hero__heading {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 44px;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+    color: var(--lc-dark);
+  }
+
+  .bundle-hero__sub {
+    font-size: 18px;
+    color: var(--lc-brown);
+    margin: 0 0 16px;
+    font-weight: 400;
+  }
+
+  .bundle-hero__value {
+    font-family: 'Fraunces', serif;
+    font-size: 15px;
+    color: var(--lc-gold);
+    font-weight: 500;
+    margin: 0 0 20px;
+    letter-spacing: 0.02em;
+  }
+
+  .bundle-hero__trust {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    font-size: 13px;
+    color: var(--lc-taupe);
+    font-weight: 400;
+  }
+
+  .bundle-hero__trust span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .bundle-hero__trust svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+
+  /* ---- Progress Tracker (Desktop) ---- */
+
+  .bundle-tracker {
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .bundle-tracker.is-stuck {
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  .bundle-tracker__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .bundle-tracker__status {
+    flex-shrink: 0;
+  }
+
+  .bundle-tracker__label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--lc-dark);
+    margin-bottom: 6px;
+  }
+
+  .bundle-tracker__label span {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+  }
+
+  .bundle-tracker__bar {
+    width: 160px;
+    height: 4px;
+    background: var(--lc-warm);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .bundle-tracker__fill {
+    height: 100%;
+    background: var(--lc-gold);
+    border-radius: 2px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  .bundle-tracker__slots {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .bundle-tracker__slot {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px dashed var(--lc-taupe);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background: var(--lc-cream);
+    position: relative;
+    cursor: default;
+  }
+
+  .bundle-tracker__slot.is-filled {
+    border: 2px solid var(--lc-gold);
+    background: #fff;
+  }
+
+  .bundle-tracker__slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .bundle-tracker__slot svg {
+    width: 16px;
+    height: 16px;
+    color: var(--lc-taupe);
+    opacity: 0.5;
+  }
+
+  .bundle-tracker__right {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .bundle-tracker__pricing {
+    text-align: right;
+  }
+
+  .bundle-tracker__total {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--lc-dark);
+    line-height: 1.2;
+  }
+
+  .bundle-tracker__savings {
+    font-size: 12px;
+    color: var(--lc-green);
+    font-weight: 500;
+  }
+
+  .bundle-tracker__cta {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .bundle-tracker__cta:disabled {
+    background: var(--lc-warm);
+    color: var(--lc-taupe);
+    cursor: not-allowed;
+  }
+
+  .bundle-tracker__cta:not(:disabled) {
+    background: var(--lc-dark);
+    color: #fff;
+  }
+
+  .bundle-tracker__cta:not(:disabled):hover {
+    background: var(--lc-brown);
+    transform: translateY(-1px);
+  }
+
+  /* ---- Mobile Sticky Bar ---- */
+
+  .bundle-mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #fff;
+    border-top: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.1);
+    padding: 12px 16px;
+  }
+
+  .bundle-mobile-bar__inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bundle-mobile-bar__info {
+    flex: 1;
+  }
+
+  .bundle-mobile-bar__count {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--lc-dark);
+    line-height: 1.2;
+  }
+
+  .bundle-mobile-bar__progress {
+    height: 3px;
+    background: var(--lc-warm);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+
+  .bundle-mobile-bar__fill {
+    height: 100%;
+    background: var(--lc-gold);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .bundle-mobile-bar__btn {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    background: var(--lc-dark);
+    color: #fff;
+  }
+
+  .bundle-mobile-bar__btn:disabled {
+    background: var(--lc-warm);
+    color: var(--lc-taupe);
+    cursor: not-allowed;
+  }
+
+  .bundle-mobile-bar__btn:not(:disabled):hover {
+    background: var(--lc-brown);
+  }
+
+  /* ---- Category Filters ---- */
+
+  .bundle-filters {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 24px 0;
+  }
+
+  .bundle-filters__scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .bundle-filters__scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bundle-filter-tab {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 8px 20px;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50px;
+    background: #fff;
+    color: var(--lc-brown);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .bundle-filter-tab:hover {
+    border-color: var(--lc-taupe);
+    background: var(--lc-cream);
+  }
+
+  .bundle-filter-tab.is-active {
+    background: var(--lc-dark);
+    color: #fff;
+    border-color: var(--lc-dark);
+  }
+
+  /* ---- Product Grid ---- */
+
+  .bundle-grid-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  .bundle-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .bundle-card {
+    position: relative;
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    background: #fff;
+  }
+
+  .bundle-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+
+  .bundle-card.is-selected {
+    border-color: var(--lc-gold);
+  }
+
+  .bundle-card.is-disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .bundle-card__img-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--lc-cream);
+    overflow: hidden;
+  }
+
+  .bundle-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .bundle-card:hover .bundle-card__img {
+    transform: scale(1.04);
+  }
+
+  .bundle-card__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0);
+    transition: background 0.3s ease;
+  }
+
+  .bundle-card:hover .bundle-card__overlay {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .bundle-card__add-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    color: var(--lc-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    z-index: 2;
+  }
+
+  .bundle-card__add-btn svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.25s ease;
+  }
+
+  .bundle-card__add-btn:hover {
+    transform: scale(1.1);
+  }
+
+  @media (min-width: 769px) {
+    .bundle-card__add-btn {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    .bundle-card:hover .bundle-card__add-btn {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .bundle-card.is-selected .bundle-card__add-btn {
+    background: var(--lc-green);
+    color: #fff;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .bundle-card__check-overlay {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--lc-green);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 2;
+  }
+
+  .bundle-card.is-selected .bundle-card__check-overlay {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .bundle-card__check-overlay svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .bundle-card__info {
+    padding: 12px 12px 14px;
+  }
+
+  .bundle-card__title {
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--lc-dark);
+    margin: 0 0 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .bundle-card__price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .bundle-card__price-original {
+    text-decoration: line-through;
+    color: var(--lc-taupe);
+    font-weight: 400;
+  }
+
+  .bundle-card__price-included {
+    color: var(--lc-green);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Load More ---- */
+
+  .bundle-load-more-wrap {
+    text-align: center;
+    padding: 16px 24px 40px;
+  }
+
+  .bundle-load-more {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 14px 48px;
+    border: 1px solid var(--lc-dark);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--lc-dark);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .bundle-load-more:hover {
+    background: var(--lc-dark);
+    color: #fff;
+  }
+
+  .bundle-load-more:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ---- How It Works ---- */
+
+  .bundle-how {
+    background: var(--lc-cream);
+    padding: 64px 24px;
+    text-align: center;
+  }
+
+  .bundle-how__heading {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--lc-dark);
+    margin: 0 0 40px;
+  }
+
+  .bundle-how__steps {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .bundle-how__step {
+    flex: 1;
+    max-width: 220px;
+  }
+
+  .bundle-how__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--lc-warm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+  }
+
+  .bundle-how__icon svg {
+    width: 24px;
+    height: 24px;
+    color: var(--lc-gold);
+  }
+
+  .bundle-how__step-num {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lc-gold);
+    margin-bottom: 6px;
+    letter-spacing: 0.04em;
+  }
+
+  .bundle-how__step-title {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--lc-dark);
+    margin: 0 0 8px;
+  }
+
+  .bundle-how__step-desc {
+    font-size: 14px;
+    color: var(--lc-taupe);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ---- Trust Badges ---- */
+
+  .bundle-trust {
+    padding: 48px 24px 64px;
+    text-align: center;
+  }
+
+  .bundle-trust__badges {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 32px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .bundle-trust__badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .bundle-trust__badge-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--lc-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bundle-trust__badge-icon svg {
+    width: 20px;
+    height: 20px;
+    color: var(--lc-gold);
+  }
+
+  .bundle-trust__badge-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--lc-brown);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Mobile Drawer ---- */
+
+  .bundle-drawer-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .bundle-drawer-overlay.is-open {
+    display: block;
+    opacity: 1;
+  }
+
+  .bundle-drawer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 201;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    max-height: 80vh;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bundle-drawer.is-open {
+    transform: translateY(0);
+  }
+
+  .bundle-drawer__handle {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: #ddd;
+    margin: 12px auto;
+    flex-shrink: 0;
+  }
+
+  .bundle-drawer__header {
+    padding: 0 20px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .bundle-drawer__title {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--lc-dark);
+    margin: 0;
+  }
+
+  .bundle-drawer__close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--lc-taupe);
+  }
+
+  .bundle-drawer__close svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .bundle-drawer__items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px 20px;
+  }
+
+  .bundle-drawer__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .bundle-drawer__item-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--lc-cream);
+    flex-shrink: 0;
+  }
+
+  .bundle-drawer__item-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--lc-dark);
+    line-height: 1.3;
+  }
+
+  .bundle-drawer__item-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--lc-taupe);
+    transition: color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .bundle-drawer__item-remove:hover {
+    color: var(--lc-dark);
+  }
+
+  .bundle-drawer__item-remove svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .bundle-drawer__empty {
+    text-align: center;
+    padding: 32px 0;
+    color: var(--lc-taupe);
+    font-size: 14px;
+  }
+
+  .bundle-drawer__footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(0,0,0,0.06);
+    flex-shrink: 0;
+  }
+
+  .bundle-drawer__totals {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .bundle-drawer__price {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--lc-dark);
+  }
+
+  .bundle-drawer__save {
+    font-size: 13px;
+    color: var(--lc-green);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+
+  .bundle-drawer__checkout {
+    width: 100%;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 14px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--lc-dark);
+    color: #fff;
+  }
+
+  .bundle-drawer__checkout:disabled {
+    background: var(--lc-warm);
+    color: var(--lc-taupe);
+    cursor: not-allowed;
+  }
+
+  .bundle-drawer__checkout:not(:disabled):hover {
+    background: var(--lc-brown);
+  }
+
+  /* ---- Animations ---- */
+
+  @keyframes bundleBounce {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.06); }
+    100% { transform: scale(1); }
+  }
+
+  .bundle-card.is-bounce {
+    animation: bundleBounce 0.35s ease;
+  }
+
+  @keyframes slotPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .bundle-tracker__slot.is-pop img {
+    animation: slotPop 0.35s ease;
+  }
+
+  /* ---- Responsive ---- */
+
+  @media (max-width: 1024px) {
+    .bundle-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .bundle-hero {
+      padding: 40px 20px 36px;
+    }
+
+    .bundle-hero__heading {
+      font-size: 32px;
+    }
+
+    .bundle-hero__sub {
+      font-size: 16px;
+    }
+
+    .bundle-tracker__inner {
+      display: none;
+    }
+
+    .bundle-mobile-bar {
+      display: block;
+    }
+
+    .bundle-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .bundle-grid-wrap {
+      padding: 20px 16px;
+    }
+
+    .bundle-card__info {
+      padding: 8px 10px 12px;
+    }
+
+    .bundle-card__title {
+      font-size: 13px;
+    }
+
+    .bundle-how__steps {
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .bundle-how__heading {
+      font-size: 26px;
+    }
+
+    .bundle-section {
+      padding-bottom: 70px; /* space for mobile sticky bar */
+    }
+  }
+</style>
+
+<div class="bundle-section" data-bundle-price="{{ bundle_price }}" data-bundle-size="{{ bundle_size }}">
+
+  <!-- ============ Hero ============ -->
+  <div class="bundle-hero">
+    <h1 class="bundle-hero__heading">{{ hero_heading }}</h1>
+    <p class="bundle-hero__sub">{{ hero_subheading }}</p>
+    <p class="bundle-hero__value">Worth up to $350 &middot; Save 75%+</p>
+    <div class="bundle-hero__trust">
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        100% Waterproof
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Free Shipping
+      </span>
+      <span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        Lifetime Warranty
+      </span>
+    </div>
+  </div>
+
+  <!-- ============ Progress Tracker (Desktop) ============ -->
+  <div class="bundle-tracker" id="bundleTracker">
+    <div class="bundle-tracker__inner">
+      <div class="bundle-tracker__status">
+        <div class="bundle-tracker__label">Your Bundle: <span id="trackerCount">0</span> of {{ bundle_size }} selected</div>
+        <div class="bundle-tracker__bar">
+          <div class="bundle-tracker__fill" id="trackerFill"></div>
+        </div>
+      </div>
+
+      <div class="bundle-tracker__slots" id="trackerSlots">
+        {%- for i in (1..bundle_size) -%}
+          <div class="bundle-tracker__slot" data-slot="{{ i }}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="bundle-tracker__right">
+        <div class="bundle-tracker__pricing">
+          <div class="bundle-tracker__total">${{ bundle_price }}.00</div>
+          <div class="bundle-tracker__savings" id="trackerSavings">You save $0.00</div>
+        </div>
+        <button class="bundle-tracker__cta" id="trackerCta" disabled>Complete Bundle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Mobile Sticky Bar ============ -->
+  <div class="bundle-mobile-bar" id="mobileBar">
+    <div class="bundle-mobile-bar__inner">
+      <div class="bundle-mobile-bar__info">
+        <div class="bundle-mobile-bar__count"><span id="mobileCount">0</span> of {{ bundle_size }} selected</div>
+        <div class="bundle-mobile-bar__progress">
+          <div class="bundle-mobile-bar__fill" id="mobileFill"></div>
+        </div>
+      </div>
+      <button class="bundle-mobile-bar__btn" id="mobileBarBtn" disabled>View Bundle</button>
+    </div>
+  </div>
+
+  <!-- ============ Category Filters ============ -->
+  <div class="bundle-filters">
+    <div class="bundle-filters__scroll" id="filterTabs">
+      <button class="bundle-filter-tab is-active" data-filter="all">All</button>
+      <button class="bundle-filter-tab" data-filter="Necklaces">Necklaces</button>
+      <button class="bundle-filter-tab" data-filter="Bracelets">Bracelets</button>
+      <button class="bundle-filter-tab" data-filter="Rings">Rings</button>
+      <button class="bundle-filter-tab" data-filter="Earrings">Earrings</button>
+      <button class="bundle-filter-tab" data-filter="Anklets">Anklets</button>
+      <button class="bundle-filter-tab" data-filter="Hand Chains">Hand Chains</button>
+    </div>
+  </div>
+
+  <!-- ============ Product Grid ============ -->
+  <div class="bundle-grid-wrap">
+    {% paginate collection.products by 24 %}
+      <div class="bundle-grid" id="bundleGrid">
+        {%- for product in collection.products -%}
+          {%- assign compare_price = product.compare_at_price | default: product.price -%}
+          <div class="bundle-card"
+               data-product-id="{{ product.id }}"
+               data-variant-id="{{ product.variants.first.id }}"
+               data-product-title="{{ product.title | escape }}"
+               data-product-image="{{ product.featured_image | image_url: width: 400 }}"
+               data-product-type="{{ product.type }}"
+               data-compare-price="{{ compare_price }}">
+            <div class="bundle-card__img-wrap">
+              <img class="bundle-card__img"
+                   src="{{ product.featured_image | image_url: width: 400 }}"
+                   alt="{{ product.title | escape }}"
+                   loading="lazy"
+                   width="400"
+                   height="400">
+              <div class="bundle-card__overlay"></div>
+              <div class="bundle-card__check-overlay">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <button class="bundle-card__add-btn" aria-label="Add to bundle">
+                <svg class="bundle-card__plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                <svg class="bundle-card__check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="20 6 9 17 4 12"/></svg>
+              </button>
+            </div>
+            <div class="bundle-card__info">
+              <h3 class="bundle-card__title">{{ product.title }}</h3>
+              <div class="bundle-card__price">
+                {%- if compare_price > 0 -%}
+                  <span class="bundle-card__price-original">{{ compare_price | money }}</span>
+                {%- endif -%}
+                <span class="bundle-card__price-included">Included</span>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.next -%}
+        <div class="bundle-load-more-wrap">
+          <button class="bundle-load-more" id="loadMoreBtn" data-next-url="{{ paginate.next.url }}">
+            Load More Pieces
+          </button>
+        </div>
+      {%- endif -%}
+    {% endpaginate %}
+  </div>
+
+  <!-- ============ Mobile Drawer ============ -->
+  <div class="bundle-drawer-overlay" id="drawerOverlay"></div>
+  <div class="bundle-drawer" id="bundleDrawer">
+    <div class="bundle-drawer__handle"></div>
+    <div class="bundle-drawer__header">
+      <h2 class="bundle-drawer__title">Your Bundle</h2>
+      <button class="bundle-drawer__close" id="drawerClose">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="bundle-drawer__items" id="drawerItems"></div>
+    <div class="bundle-drawer__footer">
+      <div class="bundle-drawer__totals">
+        <div class="bundle-drawer__price">${{ bundle_price }}.00</div>
+        <div class="bundle-drawer__save" id="drawerSavings">You save $0.00</div>
+      </div>
+      <button class="bundle-drawer__checkout" id="drawerCheckout" disabled>
+        Select {{ bundle_size }} items to continue
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ How It Works ============ -->
+  <div class="bundle-how">
+    <h2 class="bundle-how__heading">How It Works</h2>
+    <div class="bundle-how__steps">
+      <div class="bundle-how__step">
+        <div class="bundle-how__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="m9 9 .5.5"/><path d="m15 9-.5.5"/></svg>
+        </div>
+        <div class="bundle-how__step-num">Step 1</div>
+        <h3 class="bundle-how__step-title">Choose any 7 pieces</h3>
+        <p class="bundle-how__step-desc">Browse our collection and pick your favourites. Mix and match to your heart's content.</p>
+      </div>
+      <div class="bundle-how__step">
+        <div class="bundle-how__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/><rect x="7" y="8" width="10" height="8" rx="1"/><path d="M12 8v8"/></svg>
+        </div>
+        <div class="bundle-how__step-num">Step 2</div>
+        <h3 class="bundle-how__step-title">We box them beautifully</h3>
+        <p class="bundle-how__step-desc">Each piece is carefully packaged in our signature gift-ready boxes.</p>
+      </div>
+      <div class="bundle-how__step">
+        <div class="bundle-how__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 3 20 16 16 16"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="bundle-how__step-num">Step 3</div>
+        <h3 class="bundle-how__step-title">Free shipping to your door</h3>
+        <p class="bundle-how__step-desc">Enjoy free shipping on every bundle. No minimums, no catches.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ Trust Badges ============ -->
+  <div class="bundle-trust">
+    <div class="bundle-trust__badges">
+      <div class="bundle-trust__badge">
+        <div class="bundle-trust__badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
+        </div>
+        <span class="bundle-trust__badge-label">Waterproof</span>
+      </div>
+      <div class="bundle-trust__badge">
+        <div class="bundle-trust__badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+        </div>
+        <span class="bundle-trust__badge-label">Lifetime Warranty</span>
+      </div>
+      <div class="bundle-trust__badge">
+        <div class="bundle-trust__badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 3 20 16 16 16"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <span class="bundle-trust__badge-label">Free Shipping</span>
+      </div>
+      <div class="bundle-trust__badge">
+        <div class="bundle-trust__badge-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+        </div>
+        <span class="bundle-trust__badge-label">30-Day Returns</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  /* ---- Config ---- */
+  const SECTION = document.querySelector('.bundle-section');
+  if (!SECTION) return;
+
+  const BUNDLE_SIZE = parseInt(SECTION.dataset.bundleSize, 10) || 7;
+  const BUNDLE_PRICE = parseFloat(SECTION.dataset.bundlePrice) || 85;
+
+  /* ---- State ---- */
+  let selected = []; // [{ id, variantId, title, image, comparePrice }]
+
+  /* ---- Elements ---- */
+  const grid = document.getElementById('bundleGrid');
+  const trackerCount = document.getElementById('trackerCount');
+  const trackerFill = document.getElementById('trackerFill');
+  const trackerSlots = document.getElementById('trackerSlots');
+  const trackerSavings = document.getElementById('trackerSavings');
+  const trackerCta = document.getElementById('trackerCta');
+  const mobileCount = document.getElementById('mobileCount');
+  const mobileFill = document.getElementById('mobileFill');
+  const mobileBarBtn = document.getElementById('mobileBarBtn');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  const filterTabs = document.getElementById('filterTabs');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  const bundleDrawer = document.getElementById('bundleDrawer');
+  const drawerClose = document.getElementById('drawerClose');
+  const drawerItems = document.getElementById('drawerItems');
+  const drawerSavings = document.getElementById('drawerSavings');
+  const drawerCheckout = document.getElementById('drawerCheckout');
+  const tracker = document.getElementById('bundleTracker');
+
+  /* ---- Session Storage ---- */
+  const STORAGE_KEY = 'lc_bundle_selected';
+
+  function saveState() {
+    try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(selected)); } catch(e) {}
+  }
+
+  function loadState() {
+    try {
+      const data = sessionStorage.getItem(STORAGE_KEY);
+      if (data) {
+        selected = JSON.parse(data);
+        selected.forEach(item => {
+          const card = grid.querySelector(`[data-product-id="${item.id}"]`);
+          if (card) card.classList.add('is-selected');
+        });
+        updateUI();
+      }
+    } catch(e) {}
+  }
+
+  /* ---- Sticky Shadow ---- */
+  if (tracker) {
+    const obs = new IntersectionObserver(
+      ([e]) => tracker.classList.toggle('is-stuck', e.intersectionRatio < 1),
+      { threshold: [1], rootMargin: '-1px 0px 0px 0px' }
+    );
+    obs.observe(tracker);
+  }
+
+  /* ---- Toggle Selection ---- */
+  function toggleProduct(card) {
+    const id = card.dataset.productId;
+    const idx = selected.findIndex(s => s.id === id);
+
+    if (idx > -1) {
+      // Remove
+      selected.splice(idx, 1);
+      card.classList.remove('is-selected');
+      card.querySelector('.bundle-card__plus').style.display = '';
+      card.querySelector('.bundle-card__check').style.display = 'none';
+    } else {
+      // Add
+      if (selected.length >= BUNDLE_SIZE) return;
+      selected.push({
+        id: id,
+        variantId: card.dataset.variantId,
+        title: card.dataset.productTitle,
+        image: card.dataset.productImage,
+        comparePrice: parseFloat(card.dataset.comparePrice) || 0
+      });
+      card.classList.add('is-selected', 'is-bounce');
+      card.querySelector('.bundle-card__plus').style.display = 'none';
+      card.querySelector('.bundle-card__check').style.display = '';
+      setTimeout(() => card.classList.remove('is-bounce'), 350);
+    }
+
+    updateUI();
+    saveState();
+  }
+
+  /* ---- Update UI ---- */
+  function updateUI() {
+    const count = selected.length;
+    const pct = (count / BUNDLE_SIZE) * 100;
+    const totalCompare = selected.reduce((sum, s) => sum + (s.comparePrice / 100), 0);
+    const savings = Math.max(0, totalCompare - BUNDLE_PRICE);
+    const savingsStr = savings.toFixed(2);
+
+    // Counts
+    if (trackerCount) trackerCount.textContent = count;
+    if (mobileCount) mobileCount.textContent = count;
+
+    // Progress bars
+    if (trackerFill) trackerFill.style.width = pct + '%';
+    if (mobileFill) mobileFill.style.width = pct + '%';
+
+    // Savings
+    const savingsText = 'You save $' + savingsStr;
+    if (trackerSavings) trackerSavings.textContent = savingsText;
+    if (drawerSavings) drawerSavings.textContent = savingsText;
+
+    // Slots
+    if (trackerSlots) {
+      const slots = trackerSlots.querySelectorAll('.bundle-tracker__slot');
+      slots.forEach((slot, i) => {
+        if (i < count) {
+          const item = selected[i];
+          slot.classList.add('is-filled', 'is-pop');
+          slot.innerHTML = `<img src="${item.image}" alt="${item.title}" width="44" height="44">`;
+        } else {
+          slot.classList.remove('is-filled', 'is-pop');
+          slot.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>';
+        }
+      });
+    }
+
+    // CTA buttons
+    const isComplete = count >= BUNDLE_SIZE;
+    if (trackerCta) {
+      trackerCta.disabled = !isComplete;
+      trackerCta.textContent = isComplete ? 'Complete Bundle' : `${count} of ${BUNDLE_SIZE} selected`;
+    }
+
+    if (mobileBarBtn) {
+      if (count > 0) {
+        mobileBarBtn.disabled = false;
+        mobileBarBtn.textContent = isComplete ? 'Complete Bundle' : 'View Bundle';
+      } else {
+        mobileBarBtn.disabled = true;
+        mobileBarBtn.textContent = 'View Bundle';
+      }
+    }
+
+    if (drawerCheckout) {
+      drawerCheckout.disabled = !isComplete;
+      drawerCheckout.textContent = isComplete
+        ? `Complete Bundle — $${BUNDLE_PRICE}.00`
+        : `Select ${BUNDLE_SIZE - count} more item${BUNDLE_SIZE - count !== 1 ? 's' : ''}`;
+    }
+
+    // Disable unselected cards when full
+    document.querySelectorAll('.bundle-card').forEach(card => {
+      const isSelected = selected.some(s => s.id === card.dataset.productId);
+      if (!isSelected && isComplete) {
+        card.classList.add('is-disabled');
+      } else {
+        card.classList.remove('is-disabled');
+      }
+      // Sync icon state
+      if (isSelected) {
+        card.classList.add('is-selected');
+        card.querySelector('.bundle-card__plus').style.display = 'none';
+        card.querySelector('.bundle-card__check').style.display = '';
+      } else {
+        card.classList.remove('is-selected');
+        card.querySelector('.bundle-card__plus').style.display = '';
+        card.querySelector('.bundle-card__check').style.display = 'none';
+      }
+    });
+
+    // Drawer items
+    updateDrawer();
+  }
+
+  function updateDrawer() {
+    if (!drawerItems) return;
+    if (selected.length === 0) {
+      drawerItems.innerHTML = '<div class="bundle-drawer__empty">No items selected yet. Tap products above to build your bundle.</div>';
+      return;
+    }
+    drawerItems.innerHTML = selected.map((item, i) => `
+      <div class="bundle-drawer__item">
+        <img class="bundle-drawer__item-img" src="${item.image}" alt="${item.title}" width="52" height="52">
+        <span class="bundle-drawer__item-name">${item.title}</span>
+        <button class="bundle-drawer__item-remove" data-remove-index="${i}" aria-label="Remove ${item.title}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    `).join('');
+  }
+
+  /* ---- Grid Click Handler ---- */
+  grid.addEventListener('click', function(e) {
+    const card = e.target.closest('.bundle-card');
+    if (!card || card.classList.contains('is-disabled')) return;
+    e.preventDefault();
+    toggleProduct(card);
+  });
+
+  /* ---- Drawer remove ---- */
+  if (drawerItems) {
+    drawerItems.addEventListener('click', function(e) {
+      const removeBtn = e.target.closest('.bundle-drawer__item-remove');
+      if (!removeBtn) return;
+      const idx = parseInt(removeBtn.dataset.removeIndex, 10);
+      const item = selected[idx];
+      if (item) {
+        const card = document.querySelector(`.bundle-card[data-product-id="${item.id}"]`);
+        if (card) card.classList.remove('is-selected');
+        selected.splice(idx, 1);
+        updateUI();
+        saveState();
+      }
+    });
+  }
+
+  /* ---- Category Filters ---- */
+  if (filterTabs) {
+    filterTabs.addEventListener('click', function(e) {
+      const tab = e.target.closest('.bundle-filter-tab');
+      if (!tab) return;
+
+      filterTabs.querySelectorAll('.bundle-filter-tab').forEach(t => t.classList.remove('is-active'));
+      tab.classList.add('is-active');
+
+      const filter = tab.dataset.filter;
+      document.querySelectorAll('.bundle-card').forEach(card => {
+        if (filter === 'all' || card.dataset.productType === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  }
+
+  /* ---- Load More ---- */
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() {
+      const nextUrl = loadMoreBtn.dataset.nextUrl;
+      if (!nextUrl) return;
+
+      loadMoreBtn.disabled = true;
+      loadMoreBtn.textContent = 'Loading...';
+
+      fetch(nextUrl)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const newCards = doc.querySelectorAll('.bundle-card');
+          const newLoadMore = doc.getElementById('loadMoreBtn');
+
+          newCards.forEach(card => {
+            // Check if already selected
+            if (selected.some(s => s.id === card.dataset.productId)) {
+              card.classList.add('is-selected');
+              card.querySelector('.bundle-card__plus').style.display = 'none';
+              card.querySelector('.bundle-card__check').style.display = '';
+            }
+            if (selected.length >= BUNDLE_SIZE && !selected.some(s => s.id === card.dataset.productId)) {
+              card.classList.add('is-disabled');
+            }
+            grid.appendChild(card);
+          });
+
+          if (newLoadMore) {
+            loadMoreBtn.dataset.nextUrl = newLoadMore.dataset.nextUrl;
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = 'Load More Pieces';
+          } else {
+            loadMoreBtn.parentElement.remove();
+          }
+
+          // Re-apply active filter
+          const activeFilter = filterTabs.querySelector('.bundle-filter-tab.is-active');
+          if (activeFilter && activeFilter.dataset.filter !== 'all') {
+            const filter = activeFilter.dataset.filter;
+            newCards.forEach(card => {
+              if (card.dataset.productType !== filter) card.style.display = 'none';
+            });
+          }
+        })
+        .catch(() => {
+          loadMoreBtn.disabled = false;
+          loadMoreBtn.textContent = 'Load More Pieces';
+        });
+    });
+  }
+
+  /* ---- Drawer Open/Close ---- */
+  function openDrawer() {
+    drawerOverlay.classList.add('is-open');
+    bundleDrawer.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    updateDrawer();
+  }
+
+  function closeDrawer() {
+    drawerOverlay.classList.remove('is-open');
+    bundleDrawer.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  if (mobileBarBtn) {
+    mobileBarBtn.addEventListener('click', function() {
+      if (selected.length >= BUNDLE_SIZE) {
+        addToCart();
+      } else {
+        openDrawer();
+      }
+    });
+  }
+
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+
+  /* ---- Add to Cart ---- */
+  function addToCart() {
+    if (selected.length < BUNDLE_SIZE) return;
+
+    const items = selected.map(item => ({
+      id: parseInt(item.variantId, 10),
+      quantity: 1
+    }));
+
+    // Disable buttons during request
+    if (trackerCta) { trackerCta.disabled = true; trackerCta.textContent = 'Adding...'; }
+    if (drawerCheckout) { drawerCheckout.disabled = true; drawerCheckout.textContent = 'Adding...'; }
+
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items: items })
+    })
+    .then(res => {
+      if (!res.ok) throw new Error('Cart error');
+      return res.json();
+    })
+    .then(() => {
+      // Clear selection
+      selected = [];
+      saveState();
+      document.querySelectorAll('.bundle-card').forEach(card => {
+        card.classList.remove('is-selected', 'is-disabled');
+        card.querySelector('.bundle-card__plus').style.display = '';
+        card.querySelector('.bundle-card__check').style.display = 'none';
+      });
+      updateUI();
+      closeDrawer();
+
+      // Trigger cart drawer open
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+
+      // Fallback: open cart page if no drawer handler
+      setTimeout(() => {
+        if (!document.querySelector('[data-cart-drawer].is-open, .cart-drawer.is-active, .cart-drawer.active, .cart-drawer--open')) {
+          window.location.href = '/cart';
+        }
+      }, 500);
+    })
+    .catch(() => {
+      if (trackerCta) { trackerCta.disabled = false; trackerCta.textContent = 'Complete Bundle'; }
+      if (drawerCheckout) { drawerCheckout.disabled = false; drawerCheckout.textContent = `Complete Bundle — $${BUNDLE_PRICE}.00`; }
+      alert('Something went wrong adding to cart. Please try again.');
+    });
+  }
+
+  if (trackerCta) trackerCta.addEventListener('click', addToCart);
+  if (drawerCheckout) drawerCheckout.addEventListener('click', addToCart);
+
+  /* ---- Init ---- */
+  loadState();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Bundle Builder",
+  "tag": "section",
+  "class": "bundle-builder-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero Heading",
+      "default": "Build Your Bundle"
+    },
+    {
+      "type": "text",
+      "id": "hero_subheading",
+      "label": "Hero Subheading",
+      "default": "Pick any 7 pieces for just $85"
+    },
+    {
+      "type": "range",
+      "id": "bundle_price",
+      "label": "Bundle Price ($)",
+      "min": 1,
+      "max": 500,
+      "step": 1,
+      "default": 85
+    },
+    {
+      "type": "range",
+      "id": "bundle_size",
+      "label": "Items in Bundle",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 7
+    }
+  ]
+}
+{% endschema %}
