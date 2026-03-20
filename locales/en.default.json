@@ -1,0 +1,143 @@
+{
+  "general": {
+    "password_page": {
+      "title": "Opening soon"
+    },
+    "breadcrumbs": {
+      "home": "Home"
+    },
+    "search": {
+      "placeholder": "Search our store",
+      "submit": "Search",
+      "no_results": "No results found for \"{{ terms }}\"",
+      "results_count": "{{ count }} results for \"{{ terms }}\""
+    },
+    "cart": {
+      "title": "Cart",
+      "empty": "Your cart is empty",
+      "continue_shopping": "Continue Shopping",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "shop_pay": "Shop Pay",
+      "note": "Order Note",
+      "note_placeholder": "Add a note to your order...",
+      "remove": "Remove",
+      "update": "Update",
+      "quantity": "Qty",
+      "add_coupon": "Add Coupon",
+      "coupon_placeholder": "Enter discount code",
+      "apply": "Apply",
+      "free_shipping": "Free Delivery",
+      "free_shipping_remaining": "Add {{ amount }} more for free shipping!",
+      "free_shipping_achieved": "You've unlocked free shipping!",
+      "discount_progress": "Discount Progress",
+      "tier1_label": "Buy {{ qty }} = {{ pct }}% Off",
+      "tier2_label": "Buy {{ qty }}+ = {{ pct }}% Off",
+      "original_price": "Original Price",
+      "you_save": "You Save {{ amount }}"
+    },
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you were looking for doesn't exist."
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "added": "Added!",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "price": "Price",
+      "compare_at_price": "Regular price",
+      "sale_price": "Sale price",
+      "quantity": "Quantity",
+      "description": "Description",
+      "details": "Details",
+      "shipping": "Shipping & Returns",
+      "size_guide": "Size Guide",
+      "color": "Color",
+      "size": "Size",
+      "select_option": "Select {{ option }}",
+      "in_stock": "In Stock",
+      "low_stock": "Only {{ count }} left!",
+      "reviews": "Reviews",
+      "write_review": "Write a Review",
+      "share": "Share",
+      "you_may_also_like": "You May Also Like",
+      "recently_viewed": "Recently Viewed",
+      "on_sale": "Sale",
+      "new": "New",
+      "bestseller": "Bestseller",
+      "save_pct": "Save {{ pct }}%",
+      "sticky_atc": "Add to Cart — {{ price }}",
+      "waterproof": "Waterproof",
+      "sweatproof": "Sweatproof",
+      "showerproof": "Showerproof"
+    },
+    "quick_add": {
+      "label": "Quick Add",
+      "select_variant": "Select options"
+    }
+  },
+  "collections": {
+    "general": {
+      "title": "Collections",
+      "all": "All",
+      "no_products": "No products found in this collection.",
+      "items_count": "{{ count }} products",
+      "sort_by": "Sort by",
+      "sort_options": {
+        "featured": "Featured",
+        "best_selling": "Best Selling",
+        "title_asc": "A-Z",
+        "title_desc": "Z-A",
+        "price_asc": "Price: Low to High",
+        "price_desc": "Price: High to Low",
+        "created_asc": "Oldest",
+        "created_desc": "Newest"
+      },
+      "filter": "Filter",
+      "clear_all": "Clear All",
+      "apply_filters": "Apply Filters"
+    }
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu",
+      "search": "Search",
+      "cart": "Cart",
+      "wishlist": "Wishlist",
+      "account": "Account",
+      "close": "Close"
+    },
+    "footer": {
+      "tagline": "Jewelry that keeps up with your life.",
+      "shop": "Shop",
+      "best_sellers": "Best Sellers",
+      "new_arrivals": "New Arrivals",
+      "bundles": "Bundles",
+      "gift_cards": "Gift Cards",
+      "help": "Help",
+      "faq": "FAQ",
+      "shipping_returns": "Shipping & Returns",
+      "contact": "Contact Us",
+      "follow_us": "Follow Us",
+      "copyright": "© {{ year }} Louise Carter. All rights reserved."
+    },
+    "announcement": {
+      "close": "Close announcement"
+    }
+  },
+  "accessibility": {
+    "close": "Close",
+    "menu": "Menu",
+    "cart_count": "{{ count }} items in cart",
+    "increase_quantity": "Increase quantity",
+    "decrease_quantity": "Decrease quantity",
+    "remove_item": "Remove item",
+    "loading": "Loading...",
+    "skip_to_content": "Skip to content",
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

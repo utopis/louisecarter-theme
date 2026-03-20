@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}" dir="{{ request.locale.text_direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>
+    {%- if page_title -%}
+      {{ page_title }}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    {%- else -%}
+      {{ shop.name }}
+    {%- endif -%}
+  </title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.favicon -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  {%- comment -%} Google Fonts: Fraunces (display) + Jost (body) {%- endcomment -%}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Jost:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+
+  <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+
+  <style>
+    :root {
+      --lc-brown: {{ settings.color_brown }};
+      --lc-taupe: {{ settings.color_taupe }};
+      --lc-cream: {{ settings.color_cream }};
+      --lc-gold: {{ settings.color_gold }};
+      --lc-warm: {{ settings.color_warm }};
+      --lc-dark: {{ settings.color_dark }};
+      --lc-text: {{ settings.color_text }};
+      --lc-text-light: {{ settings.color_text_light }};
+      --lc-border: {{ settings.color_border }};
+      --lc-sale: {{ settings.color_sale }};
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'Jost', sans-serif;
+      --heading-scale: {{ settings.heading_scale | divided_by: 100.0 }};
+      --body-scale: {{ settings.body_scale | divided_by: 100.0 }};
+    }
+  </style>
+
+  <script>
+    window.LC = window.LC || {};
+    LC.routes = {
+      cart_url: '{{ routes.cart_url }}',
+      cart_add_url: '{{ routes.cart_add_url }}',
+      cart_change_url: '{{ routes.cart_change_url }}',
+      cart_update_url: '{{ routes.cart_update_url }}',
+      root_url: '{{ routes.root_url }}'
+    };
+    LC.money_format = {{ shop.money_format | json }};
+    LC.settings = {
+      free_shipping_threshold: {{ settings.free_shipping_threshold | default: 7500 }},
+      free_shipping_enabled: {{ settings.free_shipping_enabled }},
+      discount_enabled: {{ settings.cart_discount_enabled }},
+      tier1_qty: {{ settings.cart_discount_tier1_qty | default: 2 }},
+      tier1_pct: {{ settings.cart_discount_tier1_pct | default: 25 }},
+      tier2_qty: {{ settings.cart_discount_tier2_qty | default: 3 }},
+      tier2_pct: {{ settings.cart_discount_tier2_pct | default: 40 }}
+    };
+  </script>
+</head>
+
+<body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %}">
+
+  <a href="#main-content" class="skip-to-content">{{ 'accessibility.skip_to_content' | t }}</a>
+
+  {%- comment -%} ===== ANNOUNCEMENT BAR ===== {%- endcomment -%}
+  {%- if settings.announcement_bar_enabled -%}
+    <div class="announcement-bar" style="background-color: {{ settings.announcement_bg }}; color: {{ settings.announcement_text_color }};">
+      <div class="marquee">
+        <div class="marquee__inner">
+          <span class="marquee__text">{{ settings.announcement_text }}</span>
+          <span class="marquee__text" aria-hidden="true">{{ settings.announcement_text }}</span>
+          <span class="marquee__text" aria-hidden="true">{{ settings.announcement_text }}</span>
+          <span class="marquee__text" aria-hidden="true">{{ settings.announcement_text }}</span>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} ===== HEADER ===== {%- endcomment -%}
+  <header class="site-header" role="banner">
+    <div class="header__inner">
+      <div class="header__left">
+        <button class="header__menu-btn" aria-label="{{ 'sections.header.menu' | t }}" data-menu-toggle>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="header__center">
+        <a href="{{ routes.root_url }}" class="header__logo">
+          {%- if settings.logo -%}
+            <img
+              src="{{ settings.logo | image_url: width: 300 }}"
+              alt="{{ shop.name }}"
+              width="150"
+              height="auto"
+              loading="eager"
+            >
+          {%- else -%}
+            <span class="header__logo-text">Louise Carter</span>
+          {%- endif -%}
+        </a>
+      </div>
+
+      <div class="header__right">
+        <button class="header__icon" aria-label="{{ 'sections.header.search' | t }}" data-search-toggle>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <a href="/pages/wishlist" class="header__icon" aria-label="{{ 'sections.header.wishlist' | t }}">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </a>
+        <button class="header__icon header__cart-btn" aria-label="{{ 'sections.header.cart' | t }}" data-cart-toggle>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="header__cart-count" data-cart-count>{{ cart.item_count }}</span>
+        </button>
+      </div>
+    </div>
+
+    {%- comment -%} Desktop Navigation {%- endcomment -%}
+    <nav class="header__nav" role="navigation" aria-label="Main navigation">
+      {%- for link in linklists.main-menu.links -%}
+        <div class="nav__item{% if link.links.size > 0 %} nav__item--has-dropdown{% endif %}">
+          <a href="{{ link.url }}" class="nav__link{% if link.active %} nav__link--active{% endif %}">
+            {{ link.title }}
+          </a>
+          {%- if link.links.size > 0 -%}
+            <div class="nav__dropdown">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}" class="nav__dropdown-link">{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endfor -%}
+    </nav>
+  </header>
+
+  {%- comment -%} ===== MOBILE MENU DRAWER ===== {%- endcomment -%}
+  <div class="mobile-menu" data-mobile-menu>
+    <div class="mobile-menu__overlay" data-menu-toggle></div>
+    <div class="mobile-menu__panel">
+      <div class="mobile-menu__header">
+        <span class="mobile-menu__title">{{ 'sections.header.menu' | t }}</span>
+        <button class="mobile-menu__close" aria-label="{{ 'accessibility.close' | t }}" data-menu-toggle>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <nav class="mobile-menu__nav">
+        {%- for link in linklists.main-menu.links -%}
+          <a href="{{ link.url }}" class="mobile-menu__link">{{ link.title }}</a>
+          {%- if link.links.size > 0 -%}
+            {%- for child in link.links -%}
+              <a href="{{ child.url }}" class="mobile-menu__link mobile-menu__link--sub">{{ child.title }}</a>
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+    </div>
+  </div>
+
+  {%- comment -%} ===== MAIN CONTENT ===== {%- endcomment -%}
+  <main id="main-content" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {%- comment -%} ===== FOOTER ===== {%- endcomment -%}
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__col footer__col--brand">
+        <span class="footer__logo">Louise Carter</span>
+        <p class="footer__tagline">{{ 'sections.footer.tagline' | t }}</p>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__heading">{{ 'sections.footer.shop' | t }}</h4>
+        <ul class="footer__links">
+          <li><a href="/collections/best-sellers">{{ 'sections.footer.best_sellers' | t }}</a></li>
+          <li><a href="/collections/new-arrivals">{{ 'sections.footer.new_arrivals' | t }}</a></li>
+          <li><a href="/collections/bundles">{{ 'sections.footer.bundles' | t }}</a></li>
+          <li><a href="/products/gift-card">{{ 'sections.footer.gift_cards' | t }}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__heading">{{ 'sections.footer.help' | t }}</h4>
+        <ul class="footer__links">
+          <li><a href="/pages/faq">{{ 'sections.footer.faq' | t }}</a></li>
+          <li><a href="/pages/shipping-returns">{{ 'sections.footer.shipping_returns' | t }}</a></li>
+          <li><a href="/pages/contact">{{ 'sections.footer.contact' | t }}</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4 class="footer__heading">{{ 'sections.footer.follow_us' | t }}</h4>
+        <div class="footer__social">
+          {%- if settings.social_instagram != blank -%}
+            <a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram" class="footer__social-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+                <circle cx="12" cy="12" r="5"></circle>
+                <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"></circle>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_tiktok != blank -%}
+            <a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok" class="footer__social-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1 0-5.78 2.92 2.92 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 3 15.57 6.33 6.33 0 0 0 9.37 22a6.33 6.33 0 0 0 6.38-6.22V9.4a8.16 8.16 0 0 0 4.84 1.58V7.55a4.83 4.83 0 0 1-1-.86z"/>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_facebook != blank -%}
+            <a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook" class="footer__social-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+              </svg>
+            </a>
+          {%- endif -%}
+          {%- if settings.social_pinterest != blank -%}
+            <a href="{{ settings.social_pinterest }}" target="_blank" rel="noopener" aria-label="Pinterest" class="footer__social-link">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 4.97 3.04 9.23 7.36 11.02-.1-.92-.19-2.33.04-3.33.21-.91 1.36-5.77 1.36-5.77s-.35-.69-.35-1.72c0-1.61.93-2.81 2.09-2.81.99 0 1.46.74 1.46 1.63 0 .99-.63 2.47-.96 3.85-.27 1.15.58 2.09 1.71 2.09 2.06 0 3.64-2.17 3.64-5.3 0-2.77-1.99-4.71-4.83-4.71-3.29 0-5.22 2.47-5.22 5.02 0 .99.38 2.06.86 2.64.09.11.11.21.08.32-.09.38-.29 1.15-.33 1.31-.05.22-.18.26-.41.16-1.5-.7-2.44-2.89-2.44-4.65 0-3.78 2.75-7.26 7.92-7.26 4.16 0 7.4 2.97 7.4 6.93 0 4.14-2.61 7.46-6.22 7.46-1.22 0-2.36-.63-2.75-1.38l-.75 2.85c-.27 1.04-1 2.35-1.49 3.15C9.57 23.81 10.75 24 12 24c6.63 0 12-5.37 12-12S18.63 0 12 0z"/>
+              </svg>
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__copyright">&copy; {{ 'now' | date: '%Y' }} Louise Carter. All rights reserved.</p>
+    </div>
+  </footer>
+
+  {%- comment -%} ===== CART DRAWER ===== {%- endcomment -%}
+  {% render 'cart-drawer' %}
+
+  {%- comment -%} ===== GLOBAL SCRIPTS ===== {%- endcomment -%}
+  <script>
+  (function() {
+    'use strict';
+
+    /* ---- Mobile menu toggle ---- */
+    var mobileMenu = document.querySelector('[data-mobile-menu]');
+    document.querySelectorAll('[data-menu-toggle]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        mobileMenu.classList.toggle('is-open');
+        document.body.classList.toggle('no-scroll');
+      });
+    });
+
+    /* ---- Cart drawer toggle ---- */
+    var cartDrawer = document.querySelector('[data-cart-drawer]');
+    document.querySelectorAll('[data-cart-toggle]').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        LC.CartDrawer.open();
+      });
+    });
+
+    /* ---- Nav dropdown hover ---- */
+    document.querySelectorAll('.nav__item--has-dropdown').forEach(function(item) {
+      item.addEventListener('mouseenter', function() { this.classList.add('is-active'); });
+      item.addEventListener('mouseleave', function() { this.classList.remove('is-active'); });
+    });
+  })();
+  </script>
+</body>
+</html>

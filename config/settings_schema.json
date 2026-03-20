@@ -1,0 +1,275 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Louise Carter",
+    "theme_version": "1.0.0",
+    "theme_author": "Hyperbeam",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Brand Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_brown",
+        "label": "Brown (Primary)",
+        "default": "#4f3c2f"
+      },
+      {
+        "type": "color",
+        "id": "color_taupe",
+        "label": "Taupe (Secondary)",
+        "default": "#ab9379"
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "Cream (Background)",
+        "default": "#faf7f4"
+      },
+      {
+        "type": "color",
+        "id": "color_gold",
+        "label": "Gold (Accent)",
+        "default": "#c9a96e"
+      },
+      {
+        "type": "color",
+        "id": "color_warm",
+        "label": "Warm (Light Background)",
+        "default": "#f5efe8"
+      },
+      {
+        "type": "color",
+        "id": "color_dark",
+        "label": "Dark (Footer/Text)",
+        "default": "#2a1f17"
+      },
+      {
+        "type": "header",
+        "content": "UI Colors"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body Text",
+        "default": "#4f3c2f"
+      },
+      {
+        "type": "color",
+        "id": "color_text_light",
+        "label": "Light Text",
+        "default": "#8a7a6d"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border Color",
+        "default": "#e5ddd4"
+      },
+      {
+        "type": "color",
+        "id": "color_sale",
+        "label": "Sale / Discount Badge",
+        "default": "#c0392b"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Heading Font"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "serif"
+      },
+      {
+        "type": "range",
+        "id": "heading_scale",
+        "label": "Heading Font Size Scale",
+        "min": 80,
+        "max": 150,
+        "step": 5,
+        "default": 100,
+        "unit": "%"
+      },
+      {
+        "type": "header",
+        "content": "Body Font"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "sans-serif"
+      },
+      {
+        "type": "range",
+        "id": "body_scale",
+        "label": "Body Font Size Scale",
+        "min": 80,
+        "max": 150,
+        "step": 5,
+        "default": 100,
+        "unit": "%"
+      }
+    ]
+  },
+  {
+    "name": "Announcement Bar",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "announcement_bar_enabled",
+        "label": "Enable Announcement Bar",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement Text",
+        "default": "FREE SHIPPING ON ALL ORDERS $75+ ✦ 100% WATERPROOF · SWEATPROOF · SHOWERPROOF ✦ BUY 2 = 25% OFF · BUY 3 = 40% OFF"
+      },
+      {
+        "type": "color",
+        "id": "announcement_bg",
+        "label": "Background Color",
+        "default": "#4f3c2f"
+      },
+      {
+        "type": "color",
+        "id": "announcement_text_color",
+        "label": "Text Color",
+        "default": "#faf7f4"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Discount Tiers"
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_discount_enabled",
+        "label": "Enable tiered discounts in cart",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "cart_discount_tier1_qty",
+        "label": "Tier 1 quantity",
+        "min": 2,
+        "max": 5,
+        "step": 1,
+        "default": 2
+      },
+      {
+        "type": "range",
+        "id": "cart_discount_tier1_pct",
+        "label": "Tier 1 discount %",
+        "min": 5,
+        "max": 50,
+        "step": 5,
+        "default": 25
+      },
+      {
+        "type": "range",
+        "id": "cart_discount_tier2_qty",
+        "label": "Tier 2 quantity",
+        "min": 3,
+        "max": 10,
+        "step": 1,
+        "default": 3
+      },
+      {
+        "type": "range",
+        "id": "cart_discount_tier2_pct",
+        "label": "Tier 2 discount %",
+        "min": 5,
+        "max": 50,
+        "step": 5,
+        "default": 40
+      },
+      {
+        "type": "header",
+        "content": "Free Shipping"
+      },
+      {
+        "type": "checkbox",
+        "id": "free_shipping_enabled",
+        "label": "Enable free shipping threshold",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold (cents)",
+        "default": "7500",
+        "info": "Enter amount in cents. 7500 = $75.00"
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Social Accounts"
+      },
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest URL",
+        "default": ""
+      },
+      {
+        "type": "text",
+        "id": "social_twitter",
+        "label": "X / Twitter URL",
+        "default": ""
+      }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "32 x 32px .png recommended"
+      }
+    ]
+  }
+]

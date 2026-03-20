@@ -1,0 +1,35 @@
+{
+  "current": {
+    "color_brown": "#4f3c2f",
+    "color_taupe": "#ab9379",
+    "color_cream": "#faf7f4",
+    "color_gold": "#c9a96e",
+    "color_warm": "#f5efe8",
+    "color_dark": "#2a1f17",
+    "color_text": "#4f3c2f",
+    "color_text_light": "#8a7a6d",
+    "color_border": "#e5ddd4",
+    "color_sale": "#c0392b",
+    "heading_scale": 100,
+    "body_scale": 100,
+    "announcement_bar_enabled": true,
+    "announcement_text": "FREE SHIPPING ON ALL ORDERS $75+ ✦ 100% WATERPROOF · SWEATPROOF · SHOWERPROOF ✦ BUY 2 = 25% OFF · BUY 3 = 40% OFF",
+    "announcement_bg": "#4f3c2f",
+    "announcement_text_color": "#faf7f4",
+    "cart_discount_enabled": true,
+    "cart_discount_tier1_qty": 2,
+    "cart_discount_tier1_pct": 25,
+    "cart_discount_tier2_qty": 3,
+    "cart_discount_tier2_pct": 40,
+    "free_shipping_enabled": true,
+    "free_shipping_threshold": "7500",
+    "social_instagram": "",
+    "social_tiktok": "",
+    "social_facebook": "",
+    "social_pinterest": "",
+    "social_twitter": "",
+    "content_for_index": {
+
+    }
+  }
+}
