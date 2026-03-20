@@ -1,0 +1,624 @@
+{%- comment -%}
+  Main Homepage Section
+  Hero banner, featured collection, social proof, newsletter signup.
+{%- endcomment -%}
+
+<section class="homepage" data-section-id="{{ section.id }}">
+
+  {%- comment -%} ===== HERO BANNER ===== {%- endcomment -%}
+  <div class="homepage__hero">
+    {%- if section.settings.hero_image -%}
+      <img
+        class="homepage__hero-image"
+        src="{{ section.settings.hero_image | image_url: width: 1920 }}"
+        srcset="
+          {{ section.settings.hero_image | image_url: width: 750 }} 750w,
+          {{ section.settings.hero_image | image_url: width: 1100 }} 1100w,
+          {{ section.settings.hero_image | image_url: width: 1500 }} 1500w,
+          {{ section.settings.hero_image | image_url: width: 1920 }} 1920w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.hero_image.alt | escape | default: section.settings.hero_heading | escape }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- else -%}
+      <div class="homepage__hero-placeholder"></div>
+    {%- endif -%}
+
+    <div class="homepage__hero-overlay"></div>
+
+    <div class="homepage__hero-content">
+      {%- if section.settings.hero_subheading != blank -%}
+        <p class="homepage__hero-subheading">{{ section.settings.hero_subheading }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.hero_heading != blank -%}
+        <h1 class="homepage__hero-heading">{{ section.settings.hero_heading }}</h1>
+      {%- else -%}
+        <h1 class="homepage__hero-heading">Timeless Elegance,<br>Modern Grace</h1>
+      {%- endif -%}
+
+      {%- if section.settings.hero_text != blank -%}
+        <p class="homepage__hero-text">{{ section.settings.hero_text }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.hero_button_text != blank -%}
+        <a href="{{ section.settings.hero_button_link }}" class="homepage__hero-btn">
+          {{ section.settings.hero_button_text }}
+        </a>
+      {%- else -%}
+        <a href="{{ routes.all_products_collection_url }}" class="homepage__hero-btn">Shop Now</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} ===== FEATURED COLLECTION ===== {%- endcomment -%}
+  {%- if section.settings.featured_collection != blank -%}
+    {%- assign featured = collections[section.settings.featured_collection] -%}
+  {%- else -%}
+    {%- assign featured = collections.all -%}
+  {%- endif -%}
+
+  <div class="homepage__featured">
+    <div class="homepage__section-header">
+      <h2 class="homepage__section-title">{{ section.settings.featured_heading | default: 'Best Sellers' }}</h2>
+      {%- if section.settings.featured_subheading != blank -%}
+        <p class="homepage__section-sub">{{ section.settings.featured_subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="homepage__featured-grid">
+      {%- for product in featured.products limit: section.settings.featured_count -%}
+        <div class="homepage__featured-item">
+          {% render 'product-card', product: product, lazy: forloop.index > 4 %}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.featured_button_text != blank -%}
+      <div class="homepage__featured-cta">
+        <a href="{{ featured.url | default: routes.all_products_collection_url }}" class="homepage__view-all-btn">
+          {{ section.settings.featured_button_text }}
+        </a>
+      </div>
+    {%- else -%}
+      <div class="homepage__featured-cta">
+        <a href="{{ featured.url | default: routes.all_products_collection_url }}" class="homepage__view-all-btn">
+          View All
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} ===== AS SEEN ON ===== {%- endcomment -%}
+  <div class="homepage__social-proof">
+    <h2 class="homepage__social-proof-title">{{ section.settings.social_heading | default: 'As Seen On' }}</h2>
+    <div class="homepage__social-proof-logos">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'social_logo' -%}
+          <div class="homepage__social-logo" {{ block.shopify_attributes }}>
+            {%- if block.settings.logo -%}
+              <img
+                src="{{ block.settings.logo | image_url: width: 200 }}"
+                alt="{{ block.settings.logo_alt | escape | default: 'Press logo' }}"
+                loading="lazy"
+                width="120"
+                height="40"
+              >
+            {%- else -%}
+              <span class="homepage__social-logo-placeholder">{{ block.settings.logo_alt | default: 'Brand' }}</span>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} Default placeholders if no blocks {%- endcomment -%}
+      {%- if section.blocks.size == 0 -%}
+        <span class="homepage__social-logo-placeholder">Vogue</span>
+        <span class="homepage__social-logo-placeholder">Elle</span>
+        <span class="homepage__social-logo-placeholder">Harper's Bazaar</span>
+        <span class="homepage__social-logo-placeholder">Cosmopolitan</span>
+        <span class="homepage__social-logo-placeholder">InStyle</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- comment -%} ===== NEWSLETTER SIGNUP ===== {%- endcomment -%}
+  <div class="homepage__newsletter">
+    <div class="homepage__newsletter-inner">
+      <h2 class="homepage__newsletter-title">{{ section.settings.newsletter_heading | default: 'Join the Louise Carter Circle' }}</h2>
+      <p class="homepage__newsletter-text">{{ section.settings.newsletter_text | default: 'Be the first to hear about new arrivals, exclusive offers, and styling tips. Plus, get 10% off your first order.' }}</p>
+
+      {%- form 'customer', class: 'homepage__newsletter-form' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        {%- if form.posted_successfully? -%}
+          <p class="homepage__newsletter-success">Thank you for subscribing!</p>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <p class="homepage__newsletter-error">{{ form.errors.messages['email'] }}</p>
+        {%- endif -%}
+        <div class="homepage__newsletter-field">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="Enter your email"
+            required
+            autocomplete="email"
+            class="homepage__newsletter-input"
+            aria-label="Email address"
+          >
+          <button type="submit" class="homepage__newsletter-btn">Subscribe</button>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+
+</section>
+
+<style>
+  .homepage {
+    /* no container — sections are full-width */
+  }
+
+  /* ---- Hero ---- */
+  .homepage__hero {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #2a1f17;
+  }
+
+  .homepage__hero-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .homepage__hero-placeholder {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #4f3c2f 0%, #2a1f17 100%);
+  }
+
+  .homepage__hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(42, 31, 23, 0.6) 0%, rgba(42, 31, 23, 0.15) 50%, rgba(42, 31, 23, 0.05) 100%);
+    z-index: 1;
+  }
+
+  .homepage__hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 24px;
+    max-width: 700px;
+  }
+
+  .homepage__hero-subheading {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #c9a96e;
+    margin: 0 0 16px;
+  }
+
+  .homepage__hero-heading {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 6vw, 60px);
+    font-weight: 400;
+    color: #faf7f4;
+    line-height: 1.15;
+    margin: 0 0 20px;
+  }
+
+  .homepage__hero-text {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    color: rgba(250, 247, 244, 0.8);
+    line-height: 1.6;
+    margin: 0 0 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .homepage__hero-btn {
+    display: inline-block;
+    padding: 14px 40px;
+    background: #c9a96e;
+    color: #2a1f17;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .homepage__hero-btn:hover {
+    background: #d4b87e;
+    transform: translateY(-1px);
+  }
+
+  /* ---- Featured Collection ---- */
+  .homepage__featured {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 80px 20px;
+  }
+
+  .homepage__section-header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .homepage__section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 400;
+    color: #2a1f17;
+    margin: 0 0 10px;
+  }
+
+  .homepage__section-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    color: #ab9379;
+    margin: 0;
+  }
+
+  .homepage__featured-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .homepage__featured-cta {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .homepage__view-all-btn {
+    display: inline-block;
+    padding: 12px 36px;
+    border: 1.5px solid #4f3c2f;
+    color: #4f3c2f;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .homepage__view-all-btn:hover {
+    background: #4f3c2f;
+    color: #faf7f4;
+  }
+
+  /* ---- Social Proof / As Seen On ---- */
+  .homepage__social-proof {
+    background: #f5efe8;
+    padding: 50px 20px;
+    text-align: center;
+  }
+
+  .homepage__social-proof-title {
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #ab9379;
+    margin: 0 0 30px;
+  }
+
+  .homepage__social-proof-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px 50px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .homepage__social-logo img {
+    display: block;
+    max-height: 32px;
+    width: auto;
+    opacity: 0.5;
+    filter: grayscale(100%);
+    transition: opacity 0.3s, filter 0.3s;
+  }
+
+  .homepage__social-logo img:hover {
+    opacity: 0.8;
+    filter: grayscale(0%);
+  }
+
+  .homepage__social-logo-placeholder {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    color: #ab9379;
+    opacity: 0.5;
+    font-style: italic;
+  }
+
+  /* ---- Newsletter ---- */
+  .homepage__newsletter {
+    background: #2a1f17;
+    padding: 70px 20px;
+  }
+
+  .homepage__newsletter-inner {
+    max-width: 560px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .homepage__newsletter-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(22px, 4vw, 32px);
+    font-weight: 400;
+    color: #faf7f4;
+    margin: 0 0 14px;
+  }
+
+  .homepage__newsletter-text {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    color: rgba(250, 247, 244, 0.65);
+    line-height: 1.6;
+    margin: 0 0 30px;
+  }
+
+  .homepage__newsletter-field {
+    display: flex;
+    gap: 0;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .homepage__newsletter-input {
+    flex: 1;
+    padding: 14px 18px;
+    border: 1px solid rgba(201, 169, 110, 0.3);
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    background: rgba(255, 255, 255, 0.06);
+    color: #faf7f4;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+  }
+
+  .homepage__newsletter-input::placeholder {
+    color: rgba(250, 247, 244, 0.4);
+  }
+
+  .homepage__newsletter-input:focus {
+    outline: none;
+    border-color: #c9a96e;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .homepage__newsletter-btn {
+    padding: 14px 28px;
+    background: #c9a96e;
+    color: #2a1f17;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .homepage__newsletter-btn:hover {
+    background: #d4b87e;
+  }
+
+  .homepage__newsletter-success {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    color: #c9a96e;
+    margin: 0 0 16px;
+  }
+
+  .homepage__newsletter-error {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    color: #e8836b;
+    margin: 0 0 16px;
+  }
+
+  /* ---- Responsive ---- */
+  @media (min-width: 640px) {
+    .homepage__featured-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .homepage__featured {
+      padding: 100px 40px;
+    }
+
+    .homepage__featured-grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .homepage__newsletter {
+      padding: 90px 40px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .homepage__newsletter-field {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .homepage__newsletter-input {
+      border-right: 1px solid rgba(201, 169, 110, 0.3);
+      border-radius: 4px;
+    }
+
+    .homepage__newsletter-btn {
+      border-radius: 4px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Homepage",
+  "tag": "section",
+  "class": "section-main-homepage",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Banner"
+    },
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero image"
+    },
+    {
+      "type": "text",
+      "id": "hero_subheading",
+      "label": "Subheading",
+      "default": "Louise Carter London"
+    },
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Heading",
+      "default": "Timeless Elegance, Modern Grace"
+    },
+    {
+      "type": "textarea",
+      "id": "hero_text",
+      "label": "Body text",
+      "default": "Handcrafted jewelry designed to elevate every moment."
+    },
+    {
+      "type": "text",
+      "id": "hero_button_text",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "hero_button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Featured Collection"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "featured_heading",
+      "label": "Heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "featured_subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "range",
+      "id": "featured_count",
+      "label": "Products to show",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "featured_button_text",
+      "label": "View all button text",
+      "default": "View All"
+    },
+    {
+      "type": "header",
+      "content": "Social Proof"
+    },
+    {
+      "type": "text",
+      "id": "social_heading",
+      "label": "Heading",
+      "default": "As Seen On"
+    },
+    {
+      "type": "header",
+      "content": "Newsletter"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Heading",
+      "default": "Join the Louise Carter Circle"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Body text",
+      "default": "Be the first to hear about new arrivals, exclusive offers, and styling tips. Plus, get 10% off your first order."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "social_logo",
+      "name": "Press Logo",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "logo",
+          "label": "Logo image"
+        },
+        {
+          "type": "text",
+          "id": "logo_alt",
+          "label": "Alt text / name",
+          "default": "Press"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Homepage",
+      "blocks": []
+    }
+  ]
+}
+{% endschema %}
