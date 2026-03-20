@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart — Louise Carter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'lc-brown': '#4f3c2f',
+            'lc-taupe': '#ab9379',
+            'lc-cream': '#faf7f4',
+            'lc-gold': '#c9a96e',
+            'lc-warm': '#f5efe8',
+            'lc-dark': '#2a1f17',
+          },
+          fontFamily: {
+            'display': ['Fraunces', 'serif'],
+            'body': ['Jost', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Jost', sans-serif; color: #4f3c2f; background: #fff; }
+
+    /* Announcement bar scroll */
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: marquee 30s linear infinite; }
+
+    /* Nav */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px;
+      background: #4f3c2f; transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Quantity stepper */
+    .qty-stepper {
+      display: inline-flex; align-items: center; border: 1px solid #d4cdc4; border-radius: 9999px;
+      overflow: hidden;
+    }
+    .qty-stepper button {
+      width: 36px; height: 36px; border: none; background: transparent; cursor: pointer;
+      font-size: 16px; color: #4f3c2f; display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease;
+    }
+    .qty-stepper button:hover { background: #faf7f4; }
+    .qty-stepper span {
+      width: 32px; text-align: center; font-size: 14px; font-weight: 500;
+      font-family: 'Jost', sans-serif;
+    }
+
+    /* Cart item */
+    .cart-item {
+      display: grid; grid-template-columns: 100px 1fr auto; gap: 20px;
+      padding: 24px 0; border-bottom: 1px solid #f0ebe4; align-items: start;
+    }
+    @media (max-width: 639px) {
+      .cart-item { grid-template-columns: 80px 1fr; gap: 14px; }
+    }
+
+    /* Discount progress */
+    .discount-track {
+      height: 6px; background: #f0ebe4; border-radius: 9999px; overflow: hidden;
+      position: relative;
+    }
+    .discount-fill {
+      height: 100%; background: linear-gradient(90deg, #c9a96e, #d4b97e);
+      border-radius: 9999px; transition: width 0.5s ease;
+    }
+
+    /* Discount milestone */
+    .milestone {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .milestone-dot {
+      width: 14px; height: 14px; border-radius: 50%; border: 2px solid #d4cdc4;
+      background: #fff; transition: all 0.3s ease; position: relative; z-index: 1;
+    }
+    .milestone-dot.hit { border-color: #c9a96e; background: #c9a96e; }
+
+    /* Coupon input */
+    .coupon-input {
+      width: 100%; padding: 12px 16px; border: 1px solid #d4cdc4; border-radius: 8px;
+      font-family: 'Jost', sans-serif; font-size: 14px; color: #4f3c2f;
+      background: #fff; transition: border-color 0.2s ease; outline: none;
+    }
+    .coupon-input:focus { border-color: #4f3c2f; }
+    .coupon-input::placeholder { color: #ab9379; }
+
+    /* Upsell card */
+    .upsell-card {
+      display: flex; align-items: center; gap: 14px; padding: 16px;
+      background: #faf7f4; border-radius: 12px; border: 1px solid #f0ebe4;
+      transition: border-color 0.2s ease;
+    }
+    .upsell-card:hover { border-color: #d4cdc4; }
+
+    /* Bottom bar */
+    .discount-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 60; background: #2a1f17; }
+    .discount-bar-inner { display: flex; align-items: center; justify-content: center; padding: 10px 12px; gap: 8px; }
+    .discount-bar-text { font-size: 11px; white-space: nowrap; color: white; text-transform: uppercase; letter-spacing: 0.05em; }
+    .discount-bar-text .gold { color: #c9a96e; font-weight: 600; }
+    .discount-bar-seg { padding: 3px 10px; border-radius: 9999px; font-size: 9px; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.35); text-transform: uppercase; font-weight: 500; }
+    .discount-bar-seg.lit { background: #c9a96e; color: white; border-color: #c9a96e; }
+  </style>
+</head>
+<body class="bg-white min-h-screen">
+
+  <!-- Announcement Bar -->
+  <div class="bg-lc-dark text-white overflow-hidden">
+    <div class="marquee-track flex items-center whitespace-nowrap py-2.5" style="width: max-content;">
+      <span class="text-xs tracking-[0.15em] uppercase mx-8">Free shipping on orders $75+ ✦</span>
+      <span class="text-xs tracking-[0.15em] uppercase mx-8">Waterproof • Sweatproof • Made to Last ✦</span>
+      <span class="text-xs tracking-[0.15em] uppercase mx-8">Buy 2 Get 25% Off · Buy 3+ Get 40% Off ✦</span>
+      <span class="text-xs tracking-[0.15em] uppercase mx-8">Free shipping on orders $75+ ✦</span>
+      <span class="text-xs tracking-[0.15em] uppercase mx-8">Waterproof • Sweatproof • Made to Last ✦</span>
+      <span class="text-xs tracking-[0.15em] uppercase mx-8">Buy 2 Get 25% Off · Buy 3+ Get 40% Off ✦</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#f0ebe4]">
+    <div class="max-w-7xl mx-auto px-5 flex items-center justify-between h-16 lg:h-20">
+      <a href="index.html" class="font-display text-2xl lg:text-3xl text-lc-brown tracking-tight" style="font-weight:350;">Louise Carter</a>
+      <div class="hidden lg:flex items-center gap-8">
+        <a href="index.html" class="nav-link text-sm tracking-[0.08em] uppercase font-medium">Shop</a>
+        <a href="#" class="nav-link text-sm tracking-[0.08em] uppercase font-medium">Bundles</a>
+        <a href="#" class="nav-link text-sm tracking-[0.08em] uppercase font-medium">Best Sellers</a>
+        <a href="#" class="nav-link text-sm tracking-[0.08em] uppercase font-medium">New</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-lc-brown hover:text-lc-taupe transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </a>
+        <a href="#" class="text-lc-brown hover:text-lc-taupe transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        </a>
+        <a href="checkout.html" class="relative text-lc-brown hover:text-lc-taupe transition-colors">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-lc-gold text-white text-[10px] rounded-full flex items-center justify-center font-medium" id="cart-count">3</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Cart Content -->
+  <div class="max-w-7xl mx-auto px-5 py-8 lg:py-12">
+
+    <!-- Page Title -->
+    <div class="flex items-center justify-between mb-2">
+      <h1 class="font-display text-3xl lg:text-4xl font-medium">Your Cart</h1>
+      <a href="index.html" class="text-sm text-lc-taupe underline underline-offset-2 hover:text-lc-brown transition-colors">Continue Shopping</a>
+    </div>
+    <p class="text-sm text-lc-taupe mb-8" id="item-count-text">3 items</p>
+
+    <!-- Discount Progress Bar -->
+    <div class="mb-10 p-5 bg-lc-cream rounded-xl">
+      <div class="flex items-center justify-between mb-3">
+        <p class="text-sm font-medium" id="discount-status-text">
+          🎉 <span class="text-lc-gold font-semibold">25% off</span> applied! Add 1 more for <span class="font-semibold">40% off</span>
+        </p>
+      </div>
+      <div class="relative">
+        <div class="discount-track">
+          <div class="discount-fill" id="discount-fill" style="width:66%;"></div>
+        </div>
+        <!-- Milestones -->
+        <div class="flex justify-between mt-3">
+          <div class="milestone">
+            <span class="text-[11px] text-lc-taupe">1 item</span>
+          </div>
+          <div class="milestone">
+            <div class="milestone-dot hit"></div>
+            <span class="text-[11px] font-medium text-lc-gold">2 = 25% off</span>
+          </div>
+          <div class="milestone">
+            <div class="milestone-dot"></div>
+            <span class="text-[11px] text-lc-taupe">3+ = 40% off</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8 lg:gap-16">
+
+      <!-- LEFT: Cart Items -->
+      <div>
+        <!-- Table Header (desktop) -->
+        <div class="hidden sm:grid grid-cols-[100px_1fr_auto] gap-5 pb-3 border-b border-[#f0ebe4] text-xs text-lc-taupe uppercase tracking-wider">
+          <span></span>
+          <span>Product</span>
+          <span class="text-right">Total</span>
+        </div>
+
+        <!-- Item 1 -->
+        <div class="cart-item" data-price="45" data-qty="2">
+          <a href="product.html">
+            <img src="photos/web/sharkey-0152.JPG" alt="Marea Bracelet" class="w-full aspect-square object-cover rounded-lg">
+          </a>
+          <div class="min-w-0">
+            <a href="product.html" class="text-base font-medium hover:text-lc-taupe transition-colors">Marea Bracelet</a>
+            <p class="text-sm text-lc-taupe mt-0.5">Gold / 7"</p>
+            <p class="text-sm mt-1"><span class="line-through text-lc-taupe mr-1">$65</span> <span class="font-medium">$45</span></p>
+            <div class="flex items-center gap-4 mt-3">
+              <div class="qty-stepper">
+                <button onclick="changeQty(this, -1)">−</button>
+                <span>2</span>
+                <button onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="text-xs text-lc-taupe underline underline-offset-2 hover:text-lc-brown transition-colors" onclick="removeItem(this)">Remove</button>
+            </div>
+          </div>
+          <div class="text-right hidden sm:block">
+            <p class="font-medium item-total">$90.00</p>
+          </div>
+        </div>
+
+        <!-- Item 2 -->
+        <div class="cart-item" data-price="35" data-qty="1">
+          <a href="product.html">
+            <img src="photos/web/chinawalls-58.jpg" alt="Ellie Love Lock Necklace" class="w-full aspect-square object-cover rounded-lg">
+          </a>
+          <div class="min-w-0">
+            <a href="product.html" class="text-base font-medium hover:text-lc-taupe transition-colors">Ellie Love Lock Necklace</a>
+            <p class="text-sm text-lc-taupe mt-0.5">Gold</p>
+            <p class="text-sm mt-1"><span class="line-through text-lc-taupe mr-1">$70</span> <span class="font-medium">$35</span></p>
+            <div class="flex items-center gap-4 mt-3">
+              <div class="qty-stepper">
+                <button onclick="changeQty(this, -1)">−</button>
+                <span>1</span>
+                <button onclick="changeQty(this, 1)">+</button>
+              </div>
+              <button class="text-xs text-lc-taupe underline underline-offset-2 hover:text-lc-brown transition-colors" onclick="removeItem(this)">Remove</button>
+            </div>
+          </div>
+          <div class="text-right hidden sm:block">
+            <p class="font-medium item-total">$35.00</p>
+          </div>
+        </div>
+
+        <!-- Upsell Section -->
+        <div class="mt-8">
+          <p class="text-xs text-lc-taupe uppercase tracking-wider mb-4">Complete the look</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="upsell-card">
+              <img src="photos/web/sharkey-0374.JPG" alt="Sunset Stack Bundle" class="w-16 h-16 object-cover rounded-lg flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium">Sunset Stack Bundle</p>
+                <p class="text-xs text-lc-taupe mt-0.5"><span class="line-through">$150</span> <span class="text-lc-brown font-medium">$85</span></p>
+              </div>
+              <button class="px-3 py-1.5 text-xs border border-lc-brown text-lc-brown rounded-full hover:bg-lc-brown hover:text-white transition-colors font-medium flex-shrink-0">Add</button>
+            </div>
+            <div class="upsell-card">
+              <img src="photos/web/sharkey-0537.JPG" alt="Reela Ring" class="w-16 h-16 object-cover rounded-lg flex-shrink-0">
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium">Reela Ring</p>
+                <p class="text-xs text-lc-taupe mt-0.5">$49</p>
+              </div>
+              <button class="px-3 py-1.5 text-xs border border-lc-brown text-lc-brown rounded-full hover:bg-lc-brown hover:text-white transition-colors font-medium flex-shrink-0">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Summary -->
+      <div>
+        <div class="lg:sticky lg:top-28 bg-lc-cream rounded-xl p-6">
+          <h2 class="font-display text-xl font-medium mb-5">Order Summary</h2>
+
+          <!-- Discount Code -->
+          <div class="flex gap-2 mb-5">
+            <input type="text" class="coupon-input flex-1" placeholder="Discount code" id="discount-input">
+            <button class="px-5 py-3 bg-lc-brown text-white text-sm rounded-lg font-medium hover:bg-lc-dark transition-colors" onclick="applyDiscount()">Apply</button>
+          </div>
+
+          <!-- Totals -->
+          <div class="space-y-3 pb-4 border-b border-[#e8e2da]">
+            <div class="flex justify-between text-sm">
+              <span class="text-lc-taupe">Subtotal</span>
+              <span id="subtotal">$125.00</span>
+            </div>
+            <div class="flex justify-between text-sm" id="discount-row">
+              <span class="text-lc-taupe">Discount (25% off)</span>
+              <span class="text-green-700" id="discount-amount">−$31.25</span>
+            </div>
+            <div class="flex justify-between text-sm">
+              <span class="text-lc-taupe">Shipping</span>
+              <span class="text-green-700 text-sm font-medium">Free</span>
+            </div>
+          </div>
+
+          <!-- Estimated Total -->
+          <div class="flex justify-between items-center py-4">
+            <span class="text-base font-medium">Estimated Total</span>
+            <span class="text-2xl font-display font-medium" id="total">$93.75</span>
+          </div>
+
+          <!-- Savings callout -->
+          <div class="p-3 bg-white rounded-lg border border-green-200 mb-5">
+            <p class="text-sm text-green-800 flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              You're saving <strong class="ml-1">$31.25</strong>
+            </p>
+          </div>
+
+          <!-- Checkout Button -->
+          <button class="w-full py-4 bg-lc-brown text-white font-medium text-base rounded-lg hover:bg-lc-dark transition-colors tracking-wide mb-3" onclick="goToCheckout()">
+            Checkout
+          </button>
+
+          <!-- Shop Pay -->
+          <button class="w-full py-3.5 text-white font-medium text-sm rounded-lg mb-4 flex items-center justify-center gap-2" style="background:#5a31f4;">
+            <span style="font-weight:600">shop</span><span style="font-weight:300">pay</span>
+          </button>
+
+          <!-- Payment icons -->
+          <div class="flex items-center justify-center gap-3 mb-4">
+            <div class="w-10 h-6 rounded bg-white border border-[#e8e2da] flex items-center justify-center">
+              <span class="text-[10px] font-bold text-[#1a1f71]">VISA</span>
+            </div>
+            <div class="w-10 h-6 rounded bg-white border border-[#e8e2da] flex items-center justify-center">
+              <div class="flex -space-x-1.5">
+                <div class="w-3 h-3 rounded-full bg-red-500 opacity-80"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-400 opacity-80"></div>
+              </div>
+            </div>
+            <div class="w-10 h-6 rounded bg-[#006fcf] border border-[#e8e2da] flex items-center justify-center">
+              <span class="text-[8px] font-bold text-white">AMEX</span>
+            </div>
+            <div class="w-10 h-6 rounded bg-black border border-[#e8e2da] flex items-center justify-center">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83"/></svg>
+            </div>
+          </div>
+
+          <!-- Trust badges -->
+          <div class="flex items-center justify-center gap-6 text-[11px] text-lc-taupe">
+            <span class="flex items-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              Secure
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Protected
+            </span>
+            <span class="flex items-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+              60-Day Returns
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-lc-dark text-white mt-16">
+    <div class="max-w-7xl mx-auto px-5 py-14 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div>
+        <h3 class="font-display text-xl mb-3" style="font-weight:350;">Louise Carter</h3>
+        <p class="text-sm text-white/60 leading-relaxed">Waterproof jewelry for the woman who never slows down.</p>
+      </div>
+      <div>
+        <h4 class="text-xs uppercase tracking-widest text-white/40 mb-4">Shop</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-sm text-white/70 hover:text-white transition-colors">Best Sellers</a></li>
+          <li><a href="#" class="text-sm text-white/70 hover:text-white transition-colors">New Arrivals</a></li>
+          <li><a href="#" class="text-sm text-white/70 hover:text-white transition-colors">Bundles</a></li>
+          <li><a href="#" class="text-sm text-white/70 hover:text-white transition-colors">Gift Cards</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-xs uppercase tracking-widest text-white/40 mb-4">Help</h4>
+        <ul class="space-y-2">
+          <li><a href="#" class="text-sm text-white/70 hover:text-white transition-colors">FAQ</a></li>
+          <li><a href="#" class="text-sm text-white/70 hover:text-white transition-colors">Shipping</a></li>
+          <li><a href="#" class="text-sm text-white/70 hover:text-white transition-colors">Returns</a></li>
+          <li><a href="#" class="text-sm text-white/70 hover:text-white transition-colors">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="text-xs uppercase tracking-widest text-white/40 mb-4">Follow Us</h4>
+        <div class="flex items-center gap-3">
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="none" stroke="white" stroke-width="2"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" fill="none" stroke="white" stroke-width="2"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke="white" stroke-width="2"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M9 12a4 4 0 108 0 4 4 0 00-8 0zm6.5-5.5h.01M2 12c0 4.97 3.04 9.22 7.38 10.98.54.1.74-.23.74-.52v-1.83c-3 .65-3.63-1.45-3.63-1.45-.49-1.25-1.2-1.58-1.2-1.58-.98-.67.07-.66.07-.66 1.09.08 1.66 1.12 1.66 1.12.96 1.65 2.53 1.17 3.15.9.1-.7.37-1.17.68-1.44-2.39-.27-4.91-1.2-4.91-5.33 0-1.18.42-2.14 1.1-2.9-.11-.27-.48-1.37.1-2.85 0 0 .9-.29 2.95 1.1a10.3 10.3 0 015.38 0c2.05-1.39 2.95-1.1 2.95-1.1.58 1.48.22 2.58.1 2.85.69.76 1.1 1.72 1.1 2.9 0 4.14-2.52 5.06-4.92 5.32.39.33.73.99.73 2v2.97c0 .29.2.63.74.52A11 11 0 0022 12c0-5.52-4.48-10-10-10S2 6.48 2 12z" fill="none" stroke="white" stroke-width="1.5"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bottom Discount Bar -->
+  <div class="discount-bar lg:hidden" id="discount-bar">
+    <div class="discount-bar-inner">
+      <span class="discount-bar-text" id="bottom-bar-text"><span class="gold">25%</span> on! +1 → 40%</span>
+      <div style="display:flex;gap:3px;flex-shrink:0;">
+        <span class="discount-bar-seg lit" id="bottom-seg-25">25%</span>
+        <span class="discount-bar-seg" id="bottom-seg-40">40%</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Change quantity
+    function changeQty(btn, delta) {
+      const stepper = btn.closest('.qty-stepper');
+      const span = stepper.querySelector('span');
+      let val = parseInt(span.textContent) + delta;
+      if (val < 1) val = 1;
+      if (val > 10) val = 10;
+      span.textContent = val;
+
+      // Update item total
+      const cartItem = btn.closest('.cart-item');
+      const price = parseFloat(cartItem.dataset.price);
+      cartItem.dataset.qty = val;
+      const itemTotalEl = cartItem.querySelector('.item-total');
+      if (itemTotalEl) itemTotalEl.textContent = '$' + (price * val).toFixed(2);
+
+      recalculate();
+    }
+
+    // Remove item
+    function removeItem(btn) {
+      const cartItem = btn.closest('.cart-item');
+      cartItem.style.opacity = '0';
+      cartItem.style.transform = 'translateX(-20px)';
+      cartItem.style.transition = 'all 0.3s ease';
+      setTimeout(() => {
+        cartItem.remove();
+        recalculate();
+      }, 300);
+    }
+
+    // Recalculate totals
+    function recalculate() {
+      const items = document.querySelectorAll('.cart-item');
+      let subtotal = 0;
+      let totalQty = 0;
+
+      items.forEach(item => {
+        const price = parseFloat(item.dataset.price);
+        const qty = parseInt(item.dataset.qty);
+        subtotal += price * qty;
+        totalQty += qty;
+      });
+
+      // Determine discount
+      let discountPct = 0;
+      if (totalQty >= 3) discountPct = 40;
+      else if (totalQty >= 2) discountPct = 25;
+
+      const discountAmt = subtotal * (discountPct / 100);
+      const total = subtotal - discountAmt;
+
+      // Update UI
+      document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+      document.getElementById('total').textContent = '$' + total.toFixed(2);
+      document.getElementById('cart-count').textContent = totalQty;
+      document.getElementById('item-count-text').textContent = totalQty + ' item' + (totalQty !== 1 ? 's' : '');
+
+      // Discount row
+      const discountRow = document.getElementById('discount-row');
+      if (discountPct > 0) {
+        discountRow.style.display = 'flex';
+        discountRow.querySelector('span:first-child').textContent = 'Discount (' + discountPct + '% off)';
+        document.getElementById('discount-amount').textContent = '−$' + discountAmt.toFixed(2);
+      } else {
+        discountRow.style.display = 'none';
+      }
+
+      // Discount progress
+      const statusText = document.getElementById('discount-status-text');
+      const fill = document.getElementById('discount-fill');
+      const milestones = document.querySelectorAll('.milestone-dot');
+
+      if (totalQty === 0) {
+        statusText.innerHTML = 'Your cart is empty';
+        fill.style.width = '0%';
+        milestones.forEach(m => m.classList.remove('hit'));
+      } else if (totalQty === 1) {
+        statusText.innerHTML = 'Add 1 more item for <span class="text-lc-gold font-semibold">25% off</span>';
+        fill.style.width = '33%';
+        milestones.forEach(m => m.classList.remove('hit'));
+      } else if (totalQty === 2) {
+        statusText.innerHTML = '🎉 <span class="text-lc-gold font-semibold">25% off</span> applied! Add 1 more for <span class="font-semibold">40% off</span>';
+        fill.style.width = '66%';
+        milestones[0].classList.add('hit');
+        milestones[1].classList.remove('hit');
+      } else {
+        statusText.innerHTML = '🔥 <span class="text-lc-gold font-semibold">40% off</span> unlocked! Maximum savings!';
+        fill.style.width = '100%';
+        milestones.forEach(m => m.classList.add('hit'));
+      }
+
+      // Bottom bar
+      updateBottomBar(totalQty);
+    }
+
+    function updateBottomBar(count) {
+      const text = document.getElementById('bottom-bar-text');
+      const seg25 = document.getElementById('bottom-seg-25');
+      const seg40 = document.getElementById('bottom-seg-40');
+
+      if (count === 0) {
+        text.innerHTML = 'Stack more, save more';
+        seg25.classList.remove('lit');
+        seg40.classList.remove('lit');
+      } else if (count === 1) {
+        text.innerHTML = '+1 more = <span class="gold">25% off</span>';
+        seg25.classList.remove('lit');
+        seg40.classList.remove('lit');
+      } else if (count === 2) {
+        text.innerHTML = '<span class="gold">25%</span> on! +1 → 40%';
+        seg25.classList.add('lit');
+        seg40.classList.remove('lit');
+      } else {
+        text.innerHTML = '<span class="gold">40% off</span> unlocked ✦';
+        seg25.classList.add('lit');
+        seg40.classList.add('lit');
+      }
+    }
+
+    // Discount code
+    function applyDiscount() {
+      const input = document.getElementById('discount-input');
+      if (!input.value.trim()) return;
+      input.value = '';
+      input.placeholder = 'Code applied ✓';
+      setTimeout(() => { input.placeholder = 'Discount code'; }, 2000);
+    }
+
+    // Checkout (would go to Shopify)
+    function goToCheckout() {
+      // In production: window.location.href = shopifyCheckoutUrl
+      const btn = event.target;
+      btn.textContent = 'Redirecting to Checkout...';
+      btn.style.opacity = '0.7';
+    }
+  </script>
+</body>
+</html>

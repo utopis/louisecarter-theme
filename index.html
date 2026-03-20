@@ -1,0 +1,2025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Louise Carter — Waterproof Jewelry</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'lc-brown': '#4f3c2f',
+            'lc-taupe': '#ab9379',
+            'lc-cream': '#faf7f4',
+            'lc-gold': '#c9a96e',
+            'lc-warm': '#f5efe8',
+            'lc-dark': '#2a1f17',
+          },
+          fontFamily: {
+            'display': ['Fraunces', 'serif'],
+            'body': ['Jost', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Jost', sans-serif; color: #4f3c2f; }
+
+    /* Announcement bar scroll */
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: marquee 30s linear infinite; }
+
+    /* Smooth hover transitions */
+    .lifestyle-card { position: relative; overflow: hidden; }
+    .lifestyle-card img { transition: transform 0.6s ease, filter 0.6s ease; }
+    .lifestyle-card:hover img { transform: scale(1.05); }
+    .lifestyle-card .overlay {
+      transition: opacity 0.4s ease;
+      background: linear-gradient(to top, rgba(42,31,23,0.7) 0%, rgba(42,31,23,0.1) 50%, transparent 100%);
+    }
+    .lifestyle-card:hover .overlay { opacity: 1; }
+
+    /* Product card */
+    /* Filter tabs */
+    .filter-tab { border-color: rgba(79,60,47,0.2); color: #4f3c2f; background: transparent; }
+    .filter-tab:hover { background: rgba(79,60,47,0.05); }
+    .filter-tab.active { background: #4f3c2f; color: white; border-color: #4f3c2f; }
+
+    .product-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(79,60,47,0.1); }
+    .product-card .product-img-secondary { opacity: 0; transition: opacity 0.4s ease; position: absolute; inset: 0; }
+    .product-card:hover .product-img-secondary { opacity: 1; }
+
+    /* Badge styles */
+    .badge { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 500; }
+
+    /* Hero parallax-lite */
+    .hero-section { position: relative; overflow: hidden; }
+    .hero-section img { transition: transform 0.3s ease; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Nav */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1px;
+      background: #4f3c2f; transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* Mega menu */
+    .mega-menu {
+      opacity: 0; visibility: hidden; transform: translateY(-4px);
+      transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+    }
+    .shop-trigger:hover .mega-menu,
+    .mega-menu:hover {
+      opacity: 1; visibility: visible; transform: translateY(0);
+    }
+    .mega-cat-card img { transition: transform 0.5s ease; }
+    .mega-cat-card:hover img { transform: scale(1.08); }
+    .mega-cat-card .mega-label {
+      transition: letter-spacing 0.3s ease;
+    }
+    .mega-cat-card:hover .mega-label { letter-spacing: 0.2em; }
+
+    /* Promo pills */
+    .promo-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px; border-radius: 9999px; font-size: 12px;
+      font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+    .promo-pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+    /* Lifestyle strip */
+    .lifestyle-strip {
+      display: flex; gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .lifestyle-strip::-webkit-scrollbar { display: none; }
+    .lifestyle-strip-item {
+      flex: 0 0 auto; scroll-snap-align: start; position: relative; overflow: hidden;
+    }
+    .lifestyle-strip-item img {
+      transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .lifestyle-strip-item:hover img { transform: scale(1.06); }
+    /* Cinematic Ken Burns auto-animation */
+    @keyframes ken-burns-1 { 0%,100% { transform: scale(1) translateX(0); } 50% { transform: scale(1.05) translateX(-1%); } }
+    @keyframes ken-burns-2 { 0%,100% { transform: scale(1.03) translateX(0); } 50% { transform: scale(1) translateX(1%); } }
+    @keyframes ken-burns-3 { 0%,100% { transform: scale(1) translateY(0); } 50% { transform: scale(1.04) translateY(-1%); } }
+    .lifestyle-strip-item:nth-child(3n+1) img { animation: ken-burns-1 8s ease-in-out infinite; }
+    .lifestyle-strip-item:nth-child(3n+2) img { animation: ken-burns-2 10s ease-in-out infinite; }
+    .lifestyle-strip-item:nth-child(3n+3) img { animation: ken-burns-3 9s ease-in-out infinite; }
+    .lifestyle-strip-item:hover img { animation-play-state: paused; transform: scale(1.06); }
+
+    /* Product image arrows */
+    .img-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 32px; height: 32px; border-radius: 50%;
+      background: white; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.2s ease;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 5;
+    }
+    .product-card:hover .img-arrow { opacity: 1; }
+    .img-arrow:hover { background: #f5f5f5; }
+    .img-arrow.left { left: 8px; }
+    .img-arrow.right { right: 8px; }
+    .img-arrow svg { width: 14px; height: 14px; stroke: #4f3c2f; stroke-width: 2.5; }
+
+    /* Quick add button */
+    .quick-add {
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .product-card:hover .quick-add { opacity: 1; transform: translateY(0); }
+
+    /* Waterproof icon pulse */
+    @keyframes gentle-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .trust-icon:hover svg { animation: gentle-pulse 1s ease infinite; }
+
+    /* UGC infinite scroll */
+    @keyframes ugc-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ugc-scroll-track:hover { animation-play-state: paused; }
+
+    /* ═══ DISCOUNT BOTTOM BAR — clean mobile strip ═══ */
+    .discount-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 60;
+      background: #2a1f17; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 0;
+    }
+    .discount-bar.hidden-bar { transform: translateY(100%); }
+    .discount-bar-inner {
+      display: flex; align-items: center; justify-content: center;
+      padding: 10px 12px; gap: 8px;
+    }
+    .discount-bar-text {
+      font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 400;
+      letter-spacing: 0.06em; text-transform: uppercase; color: white;
+      white-space: nowrap; transition: all 0.3s ease;
+    }
+    .discount-bar-text .gold { color: #c9a96e; font-weight: 600; }
+    /* Segments inside bottom bar */
+    .discount-bar-segments {
+      display: flex; align-items: center; gap: 3px; flex-shrink: 0;
+    }
+    .discount-bar-seg {
+      padding: 3px 10px; border-radius: 9999px; font-family: 'Jost', sans-serif;
+      font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.35);
+      transition: all 0.4s ease; white-space: nowrap;
+    }
+    .discount-bar-seg.lit {
+      background: #c9a96e; color: white; border-color: #c9a96e;
+    }
+    /* Hide old track/fill/milestone classes (still used in cart drawer) */
+    .discount-track { flex: 1; height: 36px; background: #f5efe8; border-radius: 9999px; position: relative; overflow: hidden; display: flex; align-items: center; }
+    .discount-fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, #c9a96e, #4f3c2f); border-radius: 9999px; transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); width: 0%; }
+    .discount-text { position: relative; z-index: 2; width: 100%; text-align: center; font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: #4f3c2f; transition: color 0.3s ease; }
+    .discount-fill.past-half ~ .discount-text { color: white; }
+    .discount-milestone { flex-shrink: 0; padding: 6px 14px; border-radius: 9999px; font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; border: 1.5px solid rgba(79,60,47,0.2); color: #4f3c2f; background: white; transition: all 0.3s ease; cursor: default; }
+    .discount-milestone.active { background: #4f3c2f; color: white; border-color: #4f3c2f; }
+    .discount-milestone.gold { background: #c9a96e; color: white; border-color: #c9a96e; }
+    .discount-gift { font-size: 14px; }
+
+    /* ═══ CART DRAWER ═══ */
+    .cart-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 100;
+      opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .cart-overlay.open { opacity: 1; visibility: visible; }
+    .cart-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: 420px; max-width: 100vw;
+      background: white; z-index: 101; transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column;
+    }
+    .cart-drawer.open { transform: translateX(0); }
+    .cart-drawer-header {
+      padding: 20px 24px; border-bottom: 1px solid rgba(79,60,47,0.1);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cart-drawer-body { flex: 1; overflow-y: auto; padding: 0; }
+    .cart-drawer-footer {
+      padding: 0;
+    }
+    .cart-item {
+      display: flex; gap: 16px; padding: 16px 20px;
+      background: white; position: relative;
+      border-bottom: 1px solid rgba(79,60,47,0.08);
+    }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-img {
+      width: 72px; height: 72px; border-radius: 8px; overflow: hidden; flex-shrink: 0;
+    }
+    .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .cart-qty-controls {
+      display: inline-flex; align-items: center; border: 1px solid rgba(79,60,47,0.2); border-radius: 9999px;
+    }
+    .cart-qty-btn {
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      background: none; border: none; cursor: pointer; font-size: 14px; color: #4f3c2f;
+    }
+    .cart-qty-btn:hover { background: rgba(79,60,47,0.05); }
+    .cart-qty-value {
+      width: 24px; text-align: center; font-family: 'Jost', sans-serif;
+      font-size: 13px; color: #4f3c2f;
+    }
+    .cart-upsell {
+      padding: 16px 24px; background: #faf7f4; border-bottom: 1px solid rgba(79,60,47,0.08);
+    }
+    .cart-upsell-item {
+      display: flex; align-items: center; gap: 12px; padding: 10px 0;
+      border-bottom: 1px solid rgba(79,60,47,0.06);
+    }
+    .cart-upsell-item:last-child { border-bottom: none; }
+    .cart-upsell-img {
+      width: 52px; height: 52px; border-radius: 8px; overflow: hidden; flex-shrink: 0;
+    }
+    .cart-upsell-img img { width: 100%; height: 100%; object-fit: cover; }
+    .cart-upsell-add {
+      margin-left: auto; padding: 5px 14px; border-radius: 9999px;
+      background: #4f3c2f; color: white; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .cart-upsell-add:hover { background: #2a1f17; }
+    .cart-payment-icons { display: flex; gap: 8px; justify-content: center; margin-top: 12px; }
+    .cart-payment-icons img { height: 24px; opacity: 0.6; }
+    .cart-checkout-btn {
+      width: 100%; padding: 14px; border-radius: 10px;
+      background: #1a1a1a; color: white; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      transition: background 0.2s ease;
+    }
+    .cart-checkout-btn:hover { background: #000; }
+    .cart-shopay-btn {
+      width: 100%; padding: 14px; border-radius: 10px; margin-top: 8px;
+      background: #5a31f4; color: white; border: none; cursor: pointer;
+      font-family: 'Jost', sans-serif; font-size: 14px; font-weight: 500;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background 0.2s ease;
+    }
+    .cart-shopay-btn:hover { background: #4a28cc; }
+
+    /* Toast notification */
+    .cart-toast {
+      position: fixed; top: 80px; right: 24px; z-index: 110;
+      background: white; border-radius: 12px; padding: 12px 20px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12); display: flex; align-items: center; gap: 10px;
+      transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cart-toast.show { transform: translateX(0); }
+
+    /* Ensure body padding for fixed bottom bar */
+    body { padding-bottom: 60px; }
+  </style>
+</head>
+<body class="bg-white">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- ANNOUNCEMENT BAR -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="bg-lc-brown text-white overflow-hidden">
+    <div class="marquee-track flex items-center whitespace-nowrap py-2.5">
+      <span class="font-body text-xs tracking-[0.2em] uppercase mx-8">Free Shipping Worldwide</span>
+      <span class="text-lc-gold mx-2">✦</span>
+      <span class="font-body text-xs tracking-[0.2em] uppercase mx-8">100% Waterproof Jewelry</span>
+      <span class="text-lc-gold mx-2">✦</span>
+      <span class="font-body text-xs tracking-[0.2em] uppercase mx-8">Lifetime Color Guarantee</span>
+      <span class="text-lc-gold mx-2">✦</span>
+      <span class="font-body text-xs tracking-[0.2em] uppercase mx-8">12 Pieces for $150</span>
+      <span class="text-lc-gold mx-2">✦</span>
+      <span class="font-body text-xs tracking-[0.2em] uppercase mx-8">Free Shipping Worldwide</span>
+      <span class="text-lc-gold mx-2">✦</span>
+      <span class="font-body text-xs tracking-[0.2em] uppercase mx-8">100% Waterproof Jewelry</span>
+      <span class="text-lc-gold mx-2">✦</span>
+      <span class="font-body text-xs tracking-[0.2em] uppercase mx-8">Lifetime Color Guarantee</span>
+      <span class="text-lc-gold mx-2">✦</span>
+      <span class="font-body text-xs tracking-[0.2em] uppercase mx-8">12 Pieces for $150</span>
+      <span class="text-lc-gold mx-2">✦</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- NAVIGATION + MEGA MENU -->
+  <!-- ═══════════════════════════════════════════ -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-lc-warm">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <div class="flex items-center justify-between h-16 lg:h-20">
+        <!-- Mobile menu -->
+        <button class="lg:hidden" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+
+        <!-- Logo -->
+        <a href="/" class="font-display text-2xl lg:text-3xl font-light tracking-wide text-lc-brown">
+          Louise Carter
+        </a>
+
+        <!-- Desktop nav -->
+        <div class="hidden lg:flex items-center gap-8">
+          <!-- Shop with mega menu -->
+          <div class="shop-trigger relative">
+            <a href="#" class="nav-link font-body text-sm tracking-[0.15em] uppercase font-light py-7">Shop</a>
+            <!-- MEGA MENU -->
+            <div class="mega-menu absolute top-full -left-[420px] w-[1100px] bg-white shadow-2xl rounded-b-xl border border-lc-warm/50 p-6 z-50">
+              <div class="flex gap-6">
+                <!-- Category cards with lifestyle photos -->
+                <div class="flex gap-3 flex-1">
+                  <a href="#" class="mega-cat-card flex-1 relative rounded-lg overflow-hidden aspect-[3/4]">
+                    <img src="photos/web/sharkey-8098.JPG" alt="Earrings" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-lc-dark/70 via-transparent to-transparent"></div>
+                    <span class="mega-label absolute bottom-4 left-4 font-body text-xs tracking-[0.15em] uppercase text-white font-medium">Earrings</span>
+                  </a>
+                  <a href="#" class="mega-cat-card flex-1 relative rounded-lg overflow-hidden aspect-[3/4]">
+                    <img src="photos/web/sharkey-8681.JPG" alt="Necklaces" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-lc-dark/70 via-transparent to-transparent"></div>
+                    <span class="mega-label absolute bottom-4 left-4 font-body text-xs tracking-[0.15em] uppercase text-white font-medium">Necklaces</span>
+                  </a>
+                  <a href="#" class="mega-cat-card flex-1 relative rounded-lg overflow-hidden aspect-[3/4]">
+                    <img src="photos/web/sharkey-2533.JPG" alt="Rings" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-lc-dark/70 via-transparent to-transparent"></div>
+                    <span class="mega-label absolute bottom-4 left-4 font-body text-xs tracking-[0.15em] uppercase text-white font-medium">Rings</span>
+                  </a>
+                  <a href="#" class="mega-cat-card flex-1 relative rounded-lg overflow-hidden aspect-[3/4]">
+                    <img src="photos/web/sharkey-0152.JPG" alt="Bracelets" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-lc-dark/70 via-transparent to-transparent"></div>
+                    <span class="mega-label absolute bottom-4 left-4 font-body text-xs tracking-[0.15em] uppercase text-white font-medium">Bracelets</span>
+                  </a>
+                  <a href="#" class="mega-cat-card flex-1 relative rounded-lg overflow-hidden aspect-[3/4]">
+                    <img src="photos/web/sharkey-4010.JPG" alt="Charms" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-lc-dark/70 via-transparent to-transparent"></div>
+                    <span class="mega-label absolute bottom-4 left-4 font-body text-xs tracking-[0.15em] uppercase text-white font-medium">Charms</span>
+                  </a>
+                  <a href="#" class="mega-cat-card flex-1 relative rounded-lg overflow-hidden aspect-[3/4]">
+                    <img src="photos/web/sharkey-3227.JPG" alt="Bundles" class="absolute inset-0 w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-lc-dark/70 via-transparent to-transparent"></div>
+                    <span class="mega-label absolute bottom-4 left-4 font-body text-xs tracking-[0.15em] uppercase text-white font-medium">Bundles</span>
+                  </a>
+                </div>
+                <!-- Side links -->
+                <div class="w-48 border-l border-lc-warm pl-6 flex flex-col justify-center">
+                  <p class="font-body text-[10px] tracking-[0.2em] uppercase text-lc-taupe mb-4">Shop Other</p>
+                  <a href="#" class="font-body text-sm text-lc-dark hover:text-lc-gold transition-colors mb-2.5">Best Sellers</a>
+                  <a href="#" class="font-body text-sm text-lc-dark hover:text-lc-gold transition-colors mb-2.5">New Arrivals</a>
+                  <a href="#" class="font-body text-sm text-lc-dark hover:text-lc-gold transition-colors mb-2.5">Waterproof</a>
+                  <a href="#" class="font-body text-sm text-lc-dark hover:text-lc-gold transition-colors mb-2.5">Last Chance</a>
+                  <div class="mt-4 pt-4 border-t border-lc-warm">
+                    <a href="#" class="promo-pill bg-lc-gold/15 text-lc-brown text-[11px]">
+                      <span>🎁</span> 7 for $85 Bundle
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a href="#" class="nav-link font-body text-sm tracking-[0.15em] uppercase font-light">Bundles</a>
+          <a href="#" class="nav-link font-body text-sm tracking-[0.15em] uppercase font-light">Best Sellers</a>
+          <a href="#" class="nav-link font-body text-sm tracking-[0.15em] uppercase font-light">New</a>
+        </div>
+
+        <!-- Right side: Promo pills + Icons -->
+        <div class="flex items-center gap-4">
+          <!-- Promo pills (desktop only, Hey Harper style) -->
+          <div class="hidden lg:flex items-center gap-2">
+            <a href="#" class="promo-pill bg-lc-gold/15 text-lc-brown">
+              <span class="text-[13px]">🎁</span> <span class="text-[11px]">7 for $85</span>
+            </a>
+          </div>
+          <div class="flex items-center gap-5">
+            <button aria-label="Search">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+              </svg>
+            </button>
+            <button aria-label="Wishlist" class="hidden lg:block">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+              </svg>
+            </button>
+            <button aria-label="Cart" class="relative" onclick="openCart()">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+              </svg>
+              <span id="cart-count-badge" class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-lc-brown text-white text-[10px] rounded-full flex items-center justify-center" style="display:none;">0</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu panel -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-lc-warm">
+      <div class="px-6 py-4 space-y-1">
+        <a href="#" class="block py-3 font-body text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-warm/50">Shop All</a>
+        <a href="#" class="block py-3 font-body text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-warm/50">Necklaces</a>
+        <a href="#" class="block py-3 font-body text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-warm/50">Earrings</a>
+        <a href="#" class="block py-3 font-body text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-warm/50">Rings</a>
+        <a href="#" class="block py-3 font-body text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-warm/50">Bracelets</a>
+        <a href="#" class="block py-3 font-body text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-warm/50">Bundles</a>
+        <a href="#" class="block py-3 font-body text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-warm/50">Best Sellers</a>
+        <a href="#" class="block py-3 font-body text-sm tracking-[0.1em] uppercase text-lc-dark">New Arrivals</a>
+        <div class="pt-3">
+          <a href="#" class="promo-pill bg-lc-gold/15 text-lc-brown w-full justify-center py-3">
+            <span>🎁</span> <span>7 for $85 Bundle</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- DISCOUNT SLIDER — Hey Harper "Stack more, save more" -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="sticky top-16 lg:top-20 z-40 bg-lc-dark text-white" id="top-discount-bar">
+    <div class="max-w-[1440px] mx-auto px-4 py-2">
+      <div class="flex items-center justify-center gap-3">
+        <span class="font-body text-[11px] tracking-[0.08em] text-white/50 hidden sm:inline" id="top-slider-label">Stack more, save more —</span>
+        <!-- Two-segment pill control (Hey Harper style) -->
+        <div class="flex items-center bg-white/10 rounded-full p-0.5" style="min-width: 260px;">
+          <div class="flex-1 flex items-center justify-center h-7 rounded-full transition-all duration-500 cursor-default" id="top-tier-25" style="background: transparent;">
+            <span class="font-body text-[11px] font-medium tracking-wide transition-colors duration-300" id="top-tier-25-text" style="color: rgba(255,255,255,0.45);">25% off 2+</span>
+          </div>
+          <div class="flex-1 flex items-center justify-center h-7 rounded-full transition-all duration-500 cursor-default" id="top-tier-40" style="background: transparent;">
+            <span class="font-body text-[11px] font-medium tracking-wide transition-colors duration-300" id="top-tier-40-text" style="color: rgba(255,255,255,0.45);">40% off 3+</span>
+          </div>
+        </div>
+        <span class="text-lc-gold text-xs">✦</span>
+      </div>
+    </div>
+  </div>
+  <!-- Hidden element for slider fill (no longer needed, using segment bg instead) -->
+  <div id="top-slider-fill" style="display:none;"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- HERO -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="hero-section relative h-[85vh] lg:h-[90vh]">
+    <!-- Multi-panel hero montage -->
+    <div class="absolute inset-0 flex">
+      <div class="flex-1 relative overflow-hidden">
+        <img src="photos/web/chinawalls-145.jpg" alt="Ocean" class="w-full h-full object-cover">
+      </div>
+      <div class="flex-1 relative overflow-hidden hidden sm:block">
+        <img src="photos/web/makapuu-0536.JPG" alt="Beach" class="w-full h-full object-cover">
+      </div>
+      <div class="flex-1 relative overflow-hidden hidden lg:block">
+        <img src="photos/web/galentines-0591.JPG" alt="Everyday" class="w-full h-full object-cover">
+      </div>
+      <div class="flex-1 relative overflow-hidden hidden lg:block">
+        <img src="photos/web/holiday-1534.JPG" alt="Night Out" class="w-full h-full object-cover">
+      </div>
+      <div class="flex-1 relative overflow-hidden hidden xl:block">
+        <img src="photos/web/yoga-0710.JPG" alt="Active" class="w-full h-full object-cover">
+      </div>
+    </div>
+    <!-- Dark overlay for text readability -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10"></div>
+
+    <!-- Hero content -->
+    <div class="relative h-full flex flex-col items-center justify-end pb-16 lg:pb-24 text-center px-6">
+      <div class="max-w-2xl">
+        <p class="font-body text-xs tracking-[0.3em] uppercase text-white/70 mb-4">Waterproof • Sweatproof • Forever</p>
+        <h1 class="font-display text-4xl lg:text-6xl xl:text-7xl font-light text-white leading-[1.1] mb-6">
+          Jewelry That<br>Goes Everywhere
+        </h1>
+        <p class="font-body text-base lg:text-lg font-light text-white/80 mb-8 max-w-md mx-auto">
+          From the ocean to the gym to nights out. Never take it off.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="#" class="bg-white text-lc-dark font-body text-sm tracking-[0.15em] uppercase px-10 py-4 hover:bg-lc-cream transition-colors">
+            Shop Best Sellers
+          </a>
+          <a href="#" class="border border-white text-white font-body text-sm tracking-[0.15em] uppercase px-10 py-4 hover:bg-white hover:text-lc-dark transition-colors">
+            7 for $85 Bundle
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TRUST BAR + AS SEEN IN (combined compact) -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="bg-lc-cream border-y border-lc-warm">
+    <div class="max-w-[1440px] mx-auto px-6 py-3 lg:py-4">
+      <!-- Mobile: Single horizontal scroll strip -->
+      <div class="flex lg:hidden items-center gap-5 overflow-x-auto whitespace-nowrap py-1" style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          <svg class="w-4 h-4 text-lc-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-4-4 1.41-1.41L11 14.17l5.59-5.59L18 10l-7 7z"/></svg>
+          <span class="font-body text-[10px] tracking-[0.05em] uppercase font-medium">Waterproof</span>
+        </div>
+        <span class="text-lc-taupe/20">·</span>
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          <svg class="w-4 h-4 text-lc-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span class="font-body text-[10px] tracking-[0.05em] uppercase font-medium">Lifetime Guarantee</span>
+        </div>
+        <span class="text-lc-taupe/20">·</span>
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          <svg class="w-4 h-4 text-lc-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/><circle cx="12" cy="12" r="10"/></svg>
+          <span class="font-body text-[10px] tracking-[0.05em] uppercase font-medium">Free Ship</span>
+        </div>
+        <span class="text-lc-taupe/20">·</span>
+        <div class="flex items-center gap-1.5 flex-shrink-0">
+          <span class="font-body text-[10px] tracking-[0.05em] uppercase font-medium">400K+ Happy Customers</span>
+        </div>
+        <span class="text-lc-taupe/20">·</span>
+        <div class="flex items-center gap-3 flex-shrink-0 opacity-40">
+          <span class="text-[11px] font-bold text-lc-brown italic" style="font-family: Georgia, serif;">Forbes</span>
+          <span class="font-body text-[10px] font-bold text-lc-brown tracking-[0.15em] uppercase">ELLE</span>
+          <span class="font-body text-[9px] font-black text-lc-brown tracking-[0.02em] uppercase">Cosmo</span>
+        </div>
+      </div>
+      <!-- Desktop: Original layout -->
+      <div class="hidden lg:flex flex-wrap items-center justify-center gap-x-12">
+        <div class="trust-icon flex items-center gap-2">
+          <svg class="w-5 h-5 text-lc-gold flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15l-4-4 1.41-1.41L11 14.17l5.59-5.59L18 10l-7 7z"/>
+          </svg>
+          <span class="font-body text-[11px] tracking-[0.08em] uppercase font-medium">100% Waterproof</span>
+        </div>
+        <span class="text-lc-taupe/30">|</span>
+        <div class="trust-icon flex items-center gap-2">
+          <svg class="w-5 h-5 text-lc-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          <span class="font-body text-[11px] tracking-[0.08em] uppercase font-medium">Lifetime Guarantee</span>
+        </div>
+        <span class="text-lc-taupe/30">|</span>
+        <div class="trust-icon flex items-center gap-2">
+          <svg class="w-5 h-5 text-lc-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+            <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"/>
+            <circle cx="12" cy="12" r="10"/>
+          </svg>
+          <span class="font-body text-[11px] tracking-[0.08em] uppercase font-medium">Free Worldwide Ship</span>
+        </div>
+        <span class="text-lc-taupe/30">|</span>
+        <div class="trust-icon flex items-center gap-2">
+          <svg class="w-5 h-5 text-lc-gold flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+            <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+          </svg>
+          <span class="font-body text-[11px] tracking-[0.08em] uppercase font-medium">400,000+ Happy</span>
+        </div>
+        <span class="text-lc-taupe/30">|</span>
+        <div class="flex items-center gap-4 opacity-40">
+          <span class="text-lg font-bold text-lc-brown italic tracking-tight" style="font-family: Georgia, 'Times New Roman', serif;">Forbes</span>
+          <span class="font-body text-base font-bold text-lc-brown tracking-[0.2em] uppercase">ELLE</span>
+          <span class="font-body text-sm font-black text-lc-brown tracking-[0.02em] uppercase">Cosmopolitan</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- BEST SELLERS — Hey Harper style product grid -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-16 lg:py-24 bg-lc-cream reveal">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <p class="font-body text-xs tracking-[0.3em] uppercase text-lc-taupe mb-3">Customer Favorites</p>
+        <h2 class="font-display text-3xl lg:text-5xl font-light text-lc-dark">Best Sellers</h2>
+      </div>
+
+      <!-- Category Filter Tabs — desktop only -->
+      <div class="hidden lg:flex items-center justify-center gap-2 mb-10 flex-wrap">
+        <button onclick="filterProducts('all')" class="filter-tab active font-body text-xs tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition-all" data-filter="all">All</button>
+        <button onclick="filterProducts('necklace')" class="filter-tab font-body text-xs tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition-all" data-filter="necklace">Necklaces</button>
+        <button onclick="filterProducts('bracelet')" class="filter-tab font-body text-xs tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition-all" data-filter="bracelet">Bracelets</button>
+        <button onclick="filterProducts('earring')" class="filter-tab font-body text-xs tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition-all" data-filter="earring">Earrings</button>
+        <button onclick="filterProducts('ring')" class="filter-tab font-body text-xs tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition-all" data-filter="ring">Rings</button>
+        <button onclick="filterProducts('set')" class="filter-tab font-body text-xs tracking-[0.15em] uppercase px-5 py-2.5 rounded-full border transition-all" data-filter="set">Sets</button>
+      </div>
+
+      <!-- Product Grid — 4 col desktop, 2 col mobile like Hey Harper -->
+      <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
+
+        <!-- Row 1 -->
+
+        <!-- 1. Cuban Link Bracelet — Best Seller -->
+        <div class="product-card bg-white rounded-xl overflow-hidden cursor-pointer" data-category="bracelet">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-t-xl">
+            <div class="absolute top-3 left-3 z-10 flex gap-1.5 flex-wrap">
+              <span class="badge bg-lc-brown text-white px-2.5 py-1 rounded-full">Best Seller</span>
+            </div>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+              <svg class="w-4 h-4 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+            <img crossorigin="anonymous" src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT_Image_Oct_31_2025_02_55_40_PM-463097750.png?width=600" alt="Cuban Link Bracelet" class="w-full h-full object-cover">
+            <img src="photos/web/sharkey-0374.JPG" alt="Cuban Link Bracelet styled" class="product-img-secondary w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              <span class="w-5 h-1.5 bg-lc-brown rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+            </div>
+            <button class="img-arrow left"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
+            <button class="img-arrow right"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="p-3 lg:p-4">
+            <p class="font-body text-sm font-medium text-lc-dark mb-0.5">Cuban Link Bracelet</p>
+            <p class="font-body text-xs text-lc-brown/50 mb-2.5">Bracelet</p>
+            <div class="flex items-center justify-between">
+              <span class="font-body text-base font-medium text-lc-dark">$28</span>
+              <button class="flex items-center gap-1.5 border border-lc-brown/30 text-lc-brown font-body text-xs tracking-[0.05em] uppercase px-3 py-1.5 rounded-full hover:bg-lc-brown hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Kaya Necklace — Best Seller -->
+        <div class="product-card bg-white rounded-xl overflow-hidden cursor-pointer" data-category="necklace">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-t-xl">
+            <div class="absolute top-3 left-3 z-10 flex gap-1.5 flex-wrap">
+              <span class="badge bg-lc-brown text-white px-2.5 py-1 rounded-full">Best Seller</span>
+            </div>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+              <svg class="w-4 h-4 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+            <img crossorigin="anonymous" src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Jan-21-2026-02_34_16-PM-473210735.jpg?width=600" alt="Kaya Necklace" class="w-full h-full object-cover">
+            <img src="photos/web/sharkey-8681.JPG" alt="Kaya Necklace styled" class="product-img-secondary w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              <span class="w-5 h-1.5 bg-lc-brown rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+            </div>
+            <button class="img-arrow left"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
+            <button class="img-arrow right"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="p-3 lg:p-4">
+            <p class="font-body text-sm font-medium text-lc-dark mb-0.5">Kaya Necklace</p>
+            <p class="font-body text-xs text-lc-brown/50 mb-2.5">Necklace</p>
+            <div class="flex items-center justify-between">
+              <span class="font-body text-base font-medium text-lc-dark">$54</span>
+              <button class="flex items-center gap-1.5 border border-lc-brown/30 text-lc-brown font-body text-xs tracking-[0.05em] uppercase px-3 py-1.5 rounded-full hover:bg-lc-brown hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Mini Hoop Earrings — Best Seller -->
+        <div class="product-card bg-white rounded-xl overflow-hidden cursor-pointer" data-category="earring">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-t-xl">
+            <div class="absolute top-3 left-3 z-10 flex gap-1.5 flex-wrap">
+              <span class="badge bg-lc-brown text-white px-2.5 py-1 rounded-full">Best Seller</span>
+            </div>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+              <svg class="w-4 h-4 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+            <img crossorigin="anonymous" src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/0432A6AF-02C7-4CF9-858D-7261D8589227-462850611.png?width=600" alt="Mini Hoop Earrings" class="w-full h-full object-cover">
+            <img src="photos/web/sharkey-8098.JPG" alt="Mini Hoop Earrings styled" class="product-img-secondary w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              <span class="w-5 h-1.5 bg-lc-brown rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+            </div>
+            <button class="img-arrow left"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
+            <button class="img-arrow right"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="p-3 lg:p-4">
+            <p class="font-body text-sm font-medium text-lc-dark mb-0.5">Mini Hoop Earrings</p>
+            <p class="font-body text-xs text-lc-brown/50 mb-2.5">Earrings</p>
+            <div class="flex items-center justify-between">
+              <span class="font-body text-base font-medium text-lc-dark">$18</span>
+              <button class="flex items-center gap-1.5 border border-lc-brown/30 text-lc-brown font-body text-xs tracking-[0.05em] uppercase px-3 py-1.5 rounded-full hover:bg-lc-brown hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. Everyday Stack Set — Bundle Deal -->
+        <div class="product-card bg-white rounded-xl overflow-hidden cursor-pointer" data-category="set">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-t-xl">
+            <div class="absolute top-3 left-3 z-10 flex gap-1.5 flex-wrap">
+              <span class="badge bg-lc-gold text-white px-2.5 py-1 rounded-full">Bundle Deal</span>
+            </div>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+              <svg class="w-4 h-4 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+            <img src="photos/web/sharkey-0152.JPG" alt="Everyday Stack Set" class="w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              <span class="w-5 h-1.5 bg-lc-brown rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+            </div>
+            <button class="img-arrow left"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
+            <button class="img-arrow right"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="p-3 lg:p-4">
+            <p class="font-body text-sm font-medium text-lc-dark mb-0.5">Everyday Stack Set</p>
+            <p class="font-body text-xs text-lc-brown/50 mb-2.5">7-Piece Set</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="font-body text-base font-medium text-lc-dark line-through opacity-50">$215</span>
+                <span class="badge bg-red-500 text-white px-2.5 py-1 rounded-full font-medium text-[11px]">$85</span>
+              </div>
+              <button class="flex items-center gap-1.5 border border-lc-brown/30 text-lc-brown font-body text-xs tracking-[0.05em] uppercase px-3 py-1.5 rounded-full hover:bg-lc-brown hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+
+        <!-- 5. Ellie Initial Love Lock Necklace — Sale -->
+        <div class="product-card bg-white rounded-xl overflow-hidden cursor-pointer" data-category="necklace">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-t-xl">
+            <div class="absolute top-3 left-3 z-10 flex gap-1.5 flex-wrap">
+              <span class="badge bg-red-500/90 text-white px-2.5 py-1 rounded-full">50% Off</span>
+            </div>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+              <svg class="w-4 h-4 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+            <img crossorigin="anonymous" src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT_Image_Oct_31_2025_07_05_06_AM-463092805.png?width=600" alt="Ellie Initial Love Lock Necklace" class="w-full h-full object-cover">
+            <img src="photos/web/sharkey-7800.JPG" alt="Ellie Necklace styled" class="product-img-secondary w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              <span class="w-5 h-1.5 bg-lc-brown rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+            </div>
+            <button class="img-arrow left"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
+            <button class="img-arrow right"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="p-3 lg:p-4">
+            <p class="font-body text-sm font-medium text-lc-dark mb-0.5">Ellie Love Lock Necklace</p>
+            <p class="font-body text-xs text-lc-brown/50 mb-2.5">Necklace</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="font-body text-base font-medium text-lc-dark line-through opacity-50">$70</span>
+                <span class="font-body text-base font-medium text-red-500">$35</span>
+              </div>
+              <button class="flex items-center gap-1.5 border border-lc-brown/30 text-lc-brown font-body text-xs tracking-[0.05em] uppercase px-3 py-1.5 rounded-full hover:bg-lc-brown hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Marea Bracelet -->
+        <div class="product-card bg-white rounded-xl overflow-hidden cursor-pointer" data-category="bracelet">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-t-xl">
+            <div class="absolute top-3 left-3 z-10 flex gap-1.5 flex-wrap">
+              <span class="badge bg-lc-gold/20 text-lc-brown px-2.5 py-1 rounded-full">Waterproof</span>
+            </div>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+              <svg class="w-4 h-4 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+            <img crossorigin="anonymous" src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Jan-21-2026-01_53_43-PM-473208157.jpg?width=600" alt="Marea Bracelet" class="w-full h-full object-cover">
+            <img src="photos/web/sharkey-0537.JPG" alt="Marea Bracelet styled" class="product-img-secondary w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              <span class="w-5 h-1.5 bg-lc-brown rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+            </div>
+            <button class="img-arrow left"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
+            <button class="img-arrow right"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="p-3 lg:p-4">
+            <p class="font-body text-sm font-medium text-lc-dark mb-0.5">Marea Bracelet</p>
+            <p class="font-body text-xs text-lc-brown/50 mb-2.5">Bracelet</p>
+            <div class="flex items-center justify-between">
+              <span class="font-body text-base font-medium text-lc-dark">$45</span>
+              <button class="flex items-center gap-1.5 border border-lc-brown/30 text-lc-brown font-body text-xs tracking-[0.05em] uppercase px-3 py-1.5 rounded-full hover:bg-lc-brown hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7. Loom Earrings — New -->
+        <div class="product-card bg-white rounded-xl overflow-hidden cursor-pointer" data-category="earring">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-t-xl">
+            <div class="absolute top-3 left-3 z-10 flex gap-1.5 flex-wrap">
+              <span class="badge bg-purple-500/90 text-white px-2.5 py-1 rounded-full">New</span>
+            </div>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+              <svg class="w-4 h-4 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+            <img crossorigin="anonymous" src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Nov-3-2025-04_50_30-PM-463331180.png?width=600" alt="Loom Earrings" class="w-full h-full object-cover">
+            <img src="photos/web/sharkey-1366.JPG" alt="Loom Earrings styled" class="product-img-secondary w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              <span class="w-5 h-1.5 bg-lc-brown rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+            </div>
+            <button class="img-arrow left"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
+            <button class="img-arrow right"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="p-3 lg:p-4">
+            <p class="font-body text-sm font-medium text-lc-dark mb-0.5">Loom Earrings</p>
+            <p class="font-body text-xs text-lc-brown/50 mb-2.5">Earrings</p>
+            <div class="flex items-center justify-between">
+              <span class="font-body text-base font-medium text-lc-dark">$62</span>
+              <button class="flex items-center gap-1.5 border border-lc-brown/30 text-lc-brown font-body text-xs tracking-[0.05em] uppercase px-3 py-1.5 rounded-full hover:bg-lc-brown hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Reela Ring -->
+        <div class="product-card bg-white rounded-xl overflow-hidden cursor-pointer" data-category="ring">
+          <div class="relative aspect-[3/4] overflow-hidden rounded-t-xl">
+            <div class="absolute top-3 left-3 z-10 flex gap-1.5 flex-wrap">
+              <span class="badge bg-lc-gold/20 text-lc-brown px-2.5 py-1 rounded-full">Waterproof</span>
+            </div>
+            <button class="absolute top-3 right-3 z-10 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white transition-colors">
+              <svg class="w-4 h-4 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </button>
+            <img crossorigin="anonymous" src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Nov-3-2025-01_16_54-PM-463319142.png?width=600" alt="Reela Ring" class="w-full h-full object-cover">
+            <img src="photos/web/sharkey-2533.JPG" alt="Reela Ring styled" class="product-img-secondary w-full h-full object-cover">
+            <div class="absolute bottom-3 left-3 flex gap-1.5">
+              <span class="w-5 h-1.5 bg-lc-brown rounded-full"></span>
+              <span class="w-1.5 h-1.5 bg-lc-brown/30 rounded-full"></span>
+            </div>
+            <button class="img-arrow left"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg></button>
+            <button class="img-arrow right"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+          </div>
+          <div class="p-3 lg:p-4">
+            <p class="font-body text-sm font-medium text-lc-dark mb-0.5">Reela Ring</p>
+            <p class="font-body text-xs text-lc-brown/50 mb-2.5">Ring</p>
+            <div class="flex items-center justify-between">
+              <span class="font-body text-base font-medium text-lc-dark">$49</span>
+              <button class="flex items-center gap-1.5 border border-lc-brown/30 text-lc-brown font-body text-xs tracking-[0.05em] uppercase px-3 py-1.5 rounded-full hover:bg-lc-brown hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+
+        
+      </div>
+
+      <!-- View All -->
+      <div class="text-center mt-10">
+        <button id="load-more-btn" onclick="loadMoreProducts()" class="inline-flex items-center font-body text-sm tracking-[0.15em] uppercase bg-lc-brown text-white px-8 py-3.5 rounded-full hover:bg-lc-dark transition-colors">
+          Load More
+        </button>
+        <div class="mt-4">
+          <a href="#" class="inline-flex items-center font-body text-xs tracking-[0.15em] uppercase text-lc-brown/60 border-b border-lc-brown/30 pb-0.5 hover:text-lc-dark hover:border-lc-dark transition-colors">
+            View All Products →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SHOP BY ACTIVITY — Alo Yoga style -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-16 lg:py-24 bg-white reveal">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <div class="text-center mb-10 lg:mb-14">
+        <h2 class="font-display text-3xl lg:text-5xl font-light text-lc-dark tracking-wide">Wear It Everywhere</h2>
+      </div>
+      <div class="flex lg:grid lg:grid-cols-6 gap-3 lg:gap-4 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0" style="scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+        <a href="#" class="group flex-shrink-0 w-[160px] lg:w-auto">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-3">
+            <img src="photos/web/sharkey-0897.JPG" alt="Tennis" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <p class="font-body text-sm lg:text-base tracking-[0.15em] uppercase text-center text-lc-dark font-medium">Tennis</p>
+        </a>
+        <a href="#" class="group flex-shrink-0 w-[160px] lg:w-auto">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-3">
+            <img src="photos/web/chinawalls-145.jpg" alt="Ocean" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <p class="font-body text-sm lg:text-base tracking-[0.15em] uppercase text-center text-lc-dark font-medium">Ocean</p>
+        </a>
+        <a href="#" class="group flex-shrink-0 w-[160px] lg:w-auto">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-3">
+            <img src="photos/web/picnic-0880.JPG" alt="Everyday" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <p class="font-body text-sm lg:text-base tracking-[0.15em] uppercase text-center text-lc-dark font-medium">Everyday</p>
+        </a>
+        <a href="#" class="group flex-shrink-0 w-[160px] lg:w-auto">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-3">
+            <img src="photos/web/holiday-0044.JPG" alt="Night Out" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <p class="font-body text-sm lg:text-base tracking-[0.15em] uppercase text-center text-lc-dark font-medium">Night Out</p>
+        </a>
+        <a href="#" class="group flex-shrink-0 w-[160px] lg:w-auto">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-3">
+            <img src="photos/web/yoga-0710.JPG" alt="Active" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <p class="font-body text-sm lg:text-base tracking-[0.15em] uppercase text-center text-lc-dark font-medium">Active</p>
+        </a>
+        <a href="#" class="group flex-shrink-0 w-[160px] lg:w-auto">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-3">
+            <img src="photos/web/makapuu-0536.JPG" alt="Adventure" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <p class="font-body text-sm lg:text-base tracking-[0.15em] uppercase text-center text-lc-dark font-medium">Adventure</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- LIFESTYLE BANNER BREAK — Hey Harper style -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="relative w-full h-[500px] lg:h-[600px] overflow-hidden reveal">
+    <img src="photos/web/sharkey-2533.JPG" alt="Waterproof gold jewelry lifestyle" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-l from-black/60 via-black/20 to-transparent"></div>
+    <div class="absolute inset-0 flex items-center justify-end">
+      <div class="text-right pr-8 lg:pr-20 max-w-2xl">
+        <h2 class="font-display text-3xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-tight mb-8" style="font-weight: 900; text-transform: uppercase;">
+          Shower, go to the gym,<br>
+          live your life to the fullest<br>
+          <span class="text-lc-gold">the color remains perfect</span>
+        </h2>
+        <a href="#" class="inline-flex items-center justify-center bg-lc-dark text-white font-body text-sm tracking-[0.2em] uppercase px-12 py-4 hover:bg-black transition-colors">
+          New Drops
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- COLLECTIONS GRID — Hey Harper style rounded cards -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-16 lg:py-20 bg-lc-cream reveal">
+    <div class="max-w-[1100px] mx-auto px-6 lg:px-10">
+      <h2 class="font-display text-2xl lg:text-4xl font-light text-lc-dark text-center mb-10">Collections</h2>
+
+      <!-- 2 rows x 4 columns -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 lg:gap-5">
+
+        <!-- Best Sellers -->
+        <a href="#" class="group text-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden mb-2.5 border border-lc-brown/10 bg-white">
+            <img src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT_Image_Oct_31_2025_02_55_40_PM-463097750.png?width=400" alt="Best Sellers" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="font-body text-xs lg:text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-brown/20 pb-0.5">Best Sellers</span>
+        </a>
+
+        <!-- Bundles -->
+        <a href="#" class="group text-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden mb-2.5 border border-lc-brown/10 bg-white relative">
+            <img src="photos/web/sharkey-0152.JPG" alt="Bundles" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute bottom-2 left-2 right-2 bg-green-500 text-white text-[10px] font-body tracking-[0.1em] uppercase text-center py-1 rounded-full">Bundles · 30% Off</span>
+          </div>
+          <span class="font-body text-xs lg:text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-brown/20 pb-0.5">Bundles</span>
+        </a>
+
+        <!-- Necklaces -->
+        <a href="#" class="group text-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden mb-2.5 border border-lc-brown/10 bg-white">
+            <img src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Jan-21-2026-02_34_16-PM-473210735.jpg?width=400" alt="Necklaces" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="font-body text-xs lg:text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-brown/20 pb-0.5">Necklaces</span>
+        </a>
+
+        <!-- Rings -->
+        <a href="#" class="group text-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden mb-2.5 border border-lc-brown/10 bg-white">
+            <img src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Nov-3-2025-01_16_54-PM-463319142.png?width=400" alt="Rings" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="font-body text-xs lg:text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-brown/20 pb-0.5">Rings</span>
+        </a>
+
+        <!-- Freshwater Pearls -->
+        <a href="#" class="group text-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden mb-2.5 border border-lc-brown/10 bg-white">
+            <img src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Oct-31-2025-06_30_56-AM-462942731-1--463091593.png?width=400" alt="Freshwater Pearls" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="font-body text-xs lg:text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-brown/20 pb-0.5">Freshwater Pearls</span>
+        </a>
+
+        <!-- Earrings -->
+        <a href="#" class="group text-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden mb-2.5 border border-lc-brown/10 bg-white">
+            <img src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Nov-3-2025-04_50_30-PM-463331180.png?width=400" alt="Earrings" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="font-body text-xs lg:text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-brown/20 pb-0.5">Earrings</span>
+        </a>
+
+        <!-- Bracelets -->
+        <a href="#" class="group text-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden mb-2.5 border border-lc-brown/10 bg-white">
+            <img src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Jan-21-2026-01_53_43-PM-473208157.jpg?width=400" alt="Bracelets" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="font-body text-xs lg:text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-brown/20 pb-0.5">Bracelets</span>
+        </a>
+
+        <!-- Handchains -->
+        <a href="#" class="group text-center">
+          <div class="aspect-[4/5] rounded-xl overflow-hidden mb-2.5 border border-lc-brown/10 bg-white">
+            <img src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/ChatGPT-Image-Jan-31-2026-12_49_46-PM-474398534.jpg?width=400" alt="Handchains" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+          </div>
+          <span class="font-body text-xs lg:text-sm tracking-[0.1em] uppercase text-lc-dark border-b border-lc-brown/20 pb-0.5">Handchains</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- EDITORIAL CARDS — Alo Yoga style two-up -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-14 lg:py-20 bg-white reveal">
+    <div class="max-w-[1100px] mx-auto px-6 lg:px-10">
+      <div class="grid md:grid-cols-2 gap-5 lg:gap-8">
+
+        <!-- Editorial 1: The Summer Edit -->
+        <a href="#" class="group">
+          <div class="relative aspect-[4/5] rounded-xl overflow-hidden mb-4">
+            <img src="photos/web/boat-10.jpg" alt="The Summer Edit" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          </div>
+          <p class="font-body text-[10px] tracking-[0.3em] uppercase text-lc-taupe mb-1.5">The Summer Edit</p>
+          <p class="font-display text-xl lg:text-2xl font-light text-lc-dark leading-snug mb-2">Your vacation stack,<br>sorted.</p>
+          <span class="font-body text-xs tracking-[0.1em] uppercase text-lc-brown border-b border-lc-brown pb-0.5 group-hover:text-lc-dark group-hover:border-lc-dark transition-colors">Shop Summer</span>
+        </a>
+
+        <!-- Editorial 2: The Gift Guide -->
+        <a href="#" class="group">
+          <div class="relative aspect-[4/5] rounded-xl overflow-hidden mb-4">
+            <img src="photos/web/makapuu-2586.JPG" alt="The Gift Guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+          </div>
+          <p class="font-body text-[10px] tracking-[0.3em] uppercase text-lc-taupe mb-1.5">The Gift Guide</p>
+          <p class="font-display text-xl lg:text-2xl font-light text-lc-dark leading-snug mb-2">Waterproof gold she'll<br>never take off.</p>
+          <span class="font-body text-xs tracking-[0.1em] uppercase text-lc-brown border-b border-lc-brown pb-0.5 group-hover:text-lc-dark group-hover:border-lc-dark transition-colors">Shop Gifts</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- WATERPROOF PROOF SECTION -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-16 lg:py-24 bg-white reveal">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <div class="grid lg:grid-cols-2 gap-8 items-center">
+        <!-- Video / Image side -->
+        <div class="relative aspect-[4/5] rounded-lg overflow-hidden">
+          <img src="https://cdn.shopify.com/s/files/1/0373/7160/9227/files/15B91098-C090-489C-BED7-BFAE20A06FD5.jpg?width=1000" alt="Waterproof jewelry" class="w-full h-full object-cover">
+          <!-- Play button -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors">
+              <svg class="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content side -->
+        <div class="lg:pl-8">
+          <p class="font-body text-xs tracking-[0.3em] uppercase text-lc-gold mb-3">The Waterproof Promise</p>
+          <h2 class="font-display text-3xl lg:text-4xl font-light text-lc-dark leading-tight mb-6">
+            Built to Survive<br>Your Life
+          </h2>
+          <div class="space-y-5">
+            <div class="flex gap-4">
+              <div class="w-10 h-10 bg-lc-cream rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-lg">🌊</span>
+              </div>
+              <div>
+                <p class="font-body text-sm font-medium text-lc-dark mb-1">Ocean & Pool Safe</p>
+                <p class="font-body text-sm font-light text-lc-brown/60">Salt water, chlorine, sunscreen — doesn't matter.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-10 h-10 bg-lc-cream rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-lg">💪</span>
+              </div>
+              <div>
+                <p class="font-body text-sm font-medium text-lc-dark mb-1">Sweat-Proof</p>
+                <p class="font-body text-sm font-light text-lc-brown/60">Hot yoga, HIIT, marathon training. Your jewelry keeps up.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-10 h-10 bg-lc-cream rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-lg">🚿</span>
+              </div>
+              <div>
+                <p class="font-body text-sm font-medium text-lc-dark mb-1">Shower & Sleep</p>
+                <p class="font-body text-sm font-light text-lc-brown/60">Never take it off. Seriously.</p>
+              </div>
+            </div>
+            <div class="flex gap-4">
+              <div class="w-10 h-10 bg-lc-cream rounded-full flex items-center justify-center flex-shrink-0">
+                <span class="text-lg">♾️</span>
+              </div>
+              <div>
+                <p class="font-body text-sm font-medium text-lc-dark mb-1">Lifetime Color Guarantee</p>
+                <p class="font-body text-sm font-light text-lc-brown/60">If it ever fades, we replace it. Period.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- NEW TO LC? — Alo Yoga style split CTA banner -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-0 reveal">
+    <div class="max-w-[1100px] mx-auto px-6 lg:px-10">
+      <div class="relative rounded-xl overflow-hidden">
+        <div class="grid grid-cols-2 h-[300px] lg:h-[420px]">
+          <div class="overflow-hidden">
+            <img src="photos/web/sharkey-4010.JPG" alt="New to Louise Carter" class="w-full h-full object-cover">
+          </div>
+          <div class="overflow-hidden">
+            <img src="photos/web/sharkey-1366.JPG" alt="New to Louise Carter" class="w-full h-full object-cover">
+          </div>
+        </div>
+        <!-- Centered overlay text -->
+        <div class="absolute inset-0 flex flex-col items-center justify-center bg-black/20">
+          <h2 class="font-display text-2xl md:text-4xl lg:text-5xl text-white font-light tracking-wide mb-5" style="text-shadow: 0 2px 20px rgba(0,0,0,0.3);">New to Louise Carter?</h2>
+          <a href="#" class="inline-flex items-center justify-center bg-white text-lc-dark font-body text-xs tracking-[0.2em] uppercase px-10 py-3.5 hover:bg-lc-cream transition-colors">
+            Start Here
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="h-14 lg:h-20"></div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- BUNDLE PICKS — 3 small cards -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-14 lg:py-20 bg-white reveal">
+    <div class="max-w-[1100px] mx-auto px-6 lg:px-10">
+      <div class="text-center mb-8">
+        <p class="font-body text-xs tracking-[0.3em] uppercase text-lc-gold mb-2">Save More, Stack More</p>
+        <h2 class="font-display text-2xl lg:text-3xl font-light text-lc-dark">Bundle & Save</h2>
+      </div>
+
+      <div class="grid grid-cols-3 gap-3 lg:gap-5">
+        <!-- Bundle 1: 12 for $150 -->
+        <a href="#" class="group">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-2">
+            <img src="photos/web/sharkey-0152.JPG" alt="12 for $150 Bundle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="absolute bottom-3 left-3 right-3">
+              <p class="font-display text-white text-sm lg:text-lg font-medium leading-tight">12 Pieces</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="font-display text-white text-lg lg:text-2xl font-bold">$150</span>
+                <span class="font-body text-white/60 text-xs line-through">$420</span>
+              </div>
+            </div>
+            <span class="absolute top-2 left-2 bg-red-500 text-white text-[9px] lg:text-[10px] font-body tracking-wider uppercase px-2 py-0.5 rounded-full">Save 64%</span>
+          </div>
+        </a>
+
+        <!-- Bundle 2: 10 for $120 -->
+        <a href="#" class="group">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-2">
+            <img src="photos/web/sharkey-8098.JPG" alt="10 for $120 Bundle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="absolute bottom-3 left-3 right-3">
+              <p class="font-display text-white text-sm lg:text-lg font-medium leading-tight">10 Pieces</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="font-display text-white text-lg lg:text-2xl font-bold">$120</span>
+                <span class="font-body text-white/60 text-xs line-through">$350</span>
+              </div>
+            </div>
+            <span class="absolute top-2 left-2 bg-red-500 text-white text-[9px] lg:text-[10px] font-body tracking-wider uppercase px-2 py-0.5 rounded-full">Save 66%</span>
+          </div>
+        </a>
+
+        <!-- Bundle 3: 8 for $97 -->
+        <a href="#" class="group">
+          <div class="relative aspect-[3/4] rounded-xl overflow-hidden mb-2">
+            <img src="photos/web/sharkey-3227.JPG" alt="8 for $97 Bundle" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            <div class="absolute bottom-3 left-3 right-3">
+              <p class="font-display text-white text-sm lg:text-lg font-medium leading-tight">8 Pieces</p>
+              <div class="flex items-center gap-2 mt-1">
+                <span class="font-display text-white text-lg lg:text-2xl font-bold">$97</span>
+                <span class="font-body text-white/60 text-xs line-through">$280</span>
+              </div>
+            </div>
+            <span class="absolute top-2 left-2 bg-red-500 text-white text-[9px] lg:text-[10px] font-body tracking-wider uppercase px-2 py-0.5 rounded-full">Save 65%</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- STYLED BY YOU — Rotating photo strip -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-12 lg:py-16 bg-white overflow-hidden reveal">
+    <div class="text-center mb-8">
+      <p class="font-body text-xs tracking-[0.3em] uppercase text-lc-taupe mb-3">@louisecarter</p>
+      <h2 class="font-display text-3xl lg:text-4xl font-light text-lc-dark">Styled By You</h2>
+    </div>
+
+    <!-- Infinite scrolling strip -->
+    <div class="ugc-scroll-wrapper overflow-hidden">
+      <div class="ugc-scroll-track flex gap-3" style="animation: ugc-scroll 40s linear infinite;">
+        <!-- First set -->
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/chinawalls-58.jpg" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/makapuu-2586.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/bubblebath-0310.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/lolo-0025.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/galentines-1011.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/chinawalls-107.jpg" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/picnic-0295.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/yoga-0060.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/lolo-0764.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/holiday-0044.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/chinawalls-190.jpg" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/boat-15.jpg" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <!-- Duplicate set for seamless loop -->
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/chinawalls-58.jpg" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/makapuu-2586.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/bubblebath-0310.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/lolo-0025.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/galentines-1011.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/chinawalls-107.jpg" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/picnic-0295.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/yoga-0060.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/lolo-0764.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/holiday-0044.JPG" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/chinawalls-190.jpg" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+        <div class="flex-shrink-0 w-[200px] lg:w-[260px] aspect-square rounded-xl overflow-hidden group cursor-pointer">
+          <img src="photos/web/boat-15.jpg" alt="Styled by you" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- REVIEWS STRIP -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-16 lg:py-20 bg-lc-cream reveal">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <div class="text-center mb-12">
+        <div class="flex items-center justify-center gap-1 mb-2">
+          <span class="text-lc-gold text-lg">★★★★★</span>
+        </div>
+        <p class="font-body text-sm text-lc-brown/60 mb-2">4.9 / 5 based on 12,000+ reviews</p>
+        <h2 class="font-display text-3xl lg:text-4xl font-light text-lc-dark">What They're Saying</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Review 1 -->
+        <div class="bg-white rounded-xl p-6 lg:p-8">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="text-lc-gold text-sm">★★★★★</span>
+          </div>
+          <p class="font-body text-sm font-light text-lc-brown/70 mb-4 italic leading-relaxed">
+            "I've worn my bundle for 3 months straight — gym, pool, shower. Still looks brand new. I'm obsessed."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-lc-warm rounded-full"></div>
+            <div>
+              <p class="font-body text-xs font-medium text-lc-dark">Sarah M.</p>
+              <p class="font-body text-[11px] text-lc-brown/50">Verified Buyer</p>
+            </div>
+          </div>
+        </div>
+        <!-- Review 2 -->
+        <div class="bg-white rounded-xl p-6 lg:p-8">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="text-lc-gold text-sm">★★★★★</span>
+          </div>
+          <p class="font-body text-sm font-light text-lc-brown/70 mb-4 italic leading-relaxed">
+            "Best value jewelry I've found. The 7 for $85 is insane. My friends all want to know where I got them."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-lc-warm rounded-full"></div>
+            <div>
+              <p class="font-body text-xs font-medium text-lc-dark">Jordan K.</p>
+              <p class="font-body text-[11px] text-lc-brown/50">Verified Buyer</p>
+            </div>
+          </div>
+        </div>
+        <!-- Review 3 -->
+        <div class="bg-white rounded-xl p-6 lg:p-8">
+          <div class="flex items-center gap-1 mb-3">
+            <span class="text-lc-gold text-sm">★★★★★</span>
+          </div>
+          <p class="font-body text-sm font-light text-lc-brown/70 mb-4 italic leading-relaxed">
+            "I surf every morning and these are the only pieces that don't turn green. Lifetime customer."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-lc-warm rounded-full"></div>
+            <div>
+              <p class="font-body text-xs font-medium text-lc-dark">Ashley R.</p>
+              <p class="font-body text-[11px] text-lc-brown/50">Verified Buyer</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- EMAIL CAPTURE -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="py-16 lg:py-24 bg-lc-brown text-white reveal">
+    <div class="max-w-xl mx-auto px-6 text-center">
+      <p class="font-body text-xs tracking-[0.3em] uppercase text-lc-gold mb-3">Join the Movement</p>
+      <h2 class="font-display text-3xl lg:text-4xl font-light leading-tight mb-4">
+        Get 15% Off Your First Order
+      </h2>
+      <p class="font-body text-sm font-light text-white/60 mb-8">
+        Plus early access to new drops, exclusive bundles, and waterproof tips.
+      </p>
+      <form class="flex flex-col sm:flex-row gap-3">
+        <input type="email" placeholder="Enter your email" class="flex-1 bg-white/10 border border-white/20 rounded-lg px-5 py-3.5 font-body text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-lc-gold">
+        <button type="submit" class="bg-lc-gold text-lc-dark font-body text-sm tracking-[0.1em] uppercase font-medium px-8 py-3.5 rounded-lg hover:bg-lc-gold/90 transition-colors">
+          Subscribe
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- FOOTER -->
+  <!-- ═══════════════════════════════════════════ -->
+  <footer class="bg-lc-dark text-white/70 py-16">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-10">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <!-- Brand -->
+        <div class="col-span-2 lg:col-span-1">
+          <p class="font-display text-xl text-white mb-4">Louise Carter</p>
+          <p class="font-body text-sm font-light leading-relaxed mb-4">
+            Waterproof jewelry designed to keep up with your life. Never take it off.
+          </p>
+          <div class="flex gap-4">
+            <a href="#" class="hover:text-white transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" class="hover:text-white transition-colors">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Shop -->
+        <div>
+          <p class="font-body text-xs tracking-[0.2em] uppercase text-white mb-4">Shop</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Best Sellers</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">New Arrivals</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Bundles</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Sale</a></li>
+          </ul>
+        </div>
+
+        <!-- Help -->
+        <div>
+          <p class="font-body text-xs tracking-[0.2em] uppercase text-white mb-4">Help</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Shipping & Returns</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Contact Us</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Size Guide</a></li>
+          </ul>
+        </div>
+
+        <!-- About -->
+        <div>
+          <p class="font-body text-xs tracking-[0.2em] uppercase text-white mb-4">About</p>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Our Story</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Waterproof Promise</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Reviews</a></li>
+            <li><a href="#" class="font-body text-sm font-light hover:text-white transition-colors">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="border-t border-white/10 pt-8 flex flex-col lg:flex-row items-center justify-between gap-4">
+        <p class="font-body text-xs text-white/40">© 2026 Louise Carter. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="font-body text-xs text-white/40 hover:text-white/60 transition-colors">Privacy Policy</a>
+          <a href="#" class="font-body text-xs text-white/40 hover:text-white/60 transition-colors">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- DISCOUNT BOTTOM BAR — clean mobile strip -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="discount-bar" id="discount-bar">
+    <div class="discount-bar-inner">
+      <span class="discount-bar-text" id="bottom-bar-text">Stack more, save more</span>
+      <div class="discount-bar-segments">
+        <span class="discount-bar-seg" id="bottom-seg-25">25%</span>
+        <span class="discount-bar-seg" id="bottom-seg-40">40%</span>
+      </div>
+    </div>
+  </div>
+  <!-- Hidden elements for old updateDiscountBar function compatibility -->
+  <div style="display:none;">
+    <div id="discount-fill"></div>
+    <div id="discount-text"></div>
+    <div id="ms-25"></div>
+    <div id="ms-40"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- CART DRAWER — Hey Harper style -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <button onclick="closeCart()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-lc-warm/50 transition-colors">
+        <svg class="w-5 h-5 text-lc-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+      <span class="font-display text-lg font-light text-lc-dark">Louise Carter</span>
+      <div class="w-8"></div>
+    </div>
+
+    <!-- Discount bar inside cart too -->
+    <div style="padding: 12px 24px; border-bottom: 1px solid rgba(79,60,47,0.08);">
+      <div class="discount-bar-inner">
+        <span class="discount-gift">🎁</span>
+        <div class="discount-track">
+          <div class="discount-fill" id="cart-discount-fill"></div>
+          <div class="discount-text" id="cart-discount-text">Add items for discounts</div>
+        </div>
+        <div class="discount-milestone" id="cart-ms-25">25%</div>
+        <div class="discount-milestone" id="cart-ms-40">40%</div>
+      </div>
+      <p class="font-body text-[11px] text-lc-gold text-center mt-1.5 leading-tight" id="cart-discount-hint">Your future stack says "add one more". Buy 2 = Get 25% off. Buy 3 = Get 40% off.</p>
+    </div>
+
+    <div class="cart-drawer-body" id="cart-body">
+      <!-- Empty state -->
+      <div id="cart-empty" class="flex flex-col items-center justify-center py-16 px-6">
+        <svg class="w-16 h-16 text-lc-brown/20 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1">
+          <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <p class="font-body text-sm text-lc-brown/50 mb-4">Your cart is empty</p>
+        <button onclick="closeCart()" class="font-body text-xs tracking-[0.1em] uppercase bg-lc-brown text-white px-6 py-2.5 rounded-full hover:bg-lc-dark transition-colors">Continue Shopping</button>
+      </div>
+
+      <!-- "Your cart total is $X" — Hey Harper big heading -->
+      <div id="cart-total-heading" style="display:none; padding: 16px 24px 8px;">
+        <h3 class="font-display text-xl font-light text-lc-dark" id="cart-heading-text">Your cart total is $0</h3>
+      </div>
+
+      <!-- Cart items in bordered card — Hey Harper style -->
+      <div id="cart-items-wrapper" style="display:none; margin: 0 20px; border: 2px solid rgba(79,60,47,0.12); border-radius: 14px; overflow: hidden;">
+        <div id="cart-items"></div>
+        <!-- Subscribe — Hey Harper exact: header bar + details -->
+        <div id="cart-subscribe">
+          <div style="padding: 8px 20px; background: #4f3c2f; text-align: center;">
+            <p class="font-body text-xs font-medium tracking-wider text-white">Convert item into Subscription</p>
+          </div>
+          <div style="padding: 16px 20px; background: linear-gradient(135deg, #4f3c2f, #2a1f17); color: white;">
+            <p class="font-body text-xs font-medium tracking-wider uppercase mb-0.5" style="color: #c9a96e;">Subscribe & Save</p>
+            <p class="font-body text-[11px] font-light" style="color: rgba(255,255,255,0.7);">Get a new jewelry piece every month</p>
+            <div class="flex items-end gap-2 mt-2">
+              <span class="font-display text-3xl font-bold text-white">$30</span>
+              <span class="font-body text-xs text-white/60">/month, save $65 on this purchase</span>
+            </div>
+            <button class="mt-3 px-5 py-2 rounded-lg bg-white/20 text-white font-body text-xs tracking-wider uppercase border border-white/30 hover:bg-white/30 transition-colors">Switch to subscription</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upsell section -->
+      <div class="cart-upsell" id="cart-upsells" style="display:none;">
+        <p class="font-display text-base font-light text-lc-dark mb-3">You're taking this, right?</p>
+        <div class="cart-upsell-item">
+          <div class="cart-upsell-img"><img src="photos/web/sharkey-8098.JPG" alt="Mini Hoop Earrings"></div>
+          <div class="flex-1">
+            <p class="font-body text-sm font-medium text-lc-dark">Mini Hoop Earrings</p>
+            <p class="font-body text-[11px] text-lc-brown/40">Earrings</p>
+            <p class="font-body text-sm font-medium text-lc-dark mt-0.5">$18</p>
+          </div>
+          <button class="cart-upsell-add" onclick="addToCart('Mini Hoop Earrings', 18, 'photos/web/sharkey-8098.JPG')">
+            <svg class="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            Add
+          </button>
+        </div>
+        <div class="cart-upsell-item">
+          <div class="cart-upsell-img"><img src="photos/web/sharkey-4010.JPG" alt="Travel Pouch"></div>
+          <div class="flex-1">
+            <p class="font-body text-sm font-medium text-lc-dark">Travel Pouch</p>
+            <p class="font-body text-[11px] text-lc-brown/40">Jewelry Case</p>
+            <p class="font-body text-sm font-medium text-lc-dark mt-0.5">$16</p>
+          </div>
+          <button class="cart-upsell-add" onclick="addToCart('Travel Pouch', 16, 'photos/web/sharkey-4010.JPG')">
+            <svg class="w-3.5 h-3.5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+            Add
+          </button>
+        </div>
+      </div>
+
+      <!-- Coupon + Totals — INSIDE scrollable body now -->
+      <div id="cart-footer" style="display:none; padding: 0 20px 12px;">
+        <div style="border: 1.5px solid rgba(79,60,47,0.1); border-radius: 12px; overflow: hidden; background: white;">
+          <div class="flex items-center gap-2 px-4 py-2.5 cursor-pointer border-b border-lc-brown/8" onclick="document.getElementById('coupon-input').classList.toggle('hidden')">
+            <svg class="w-4 h-4 text-lc-brown/50" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+            <span class="font-body text-sm text-lc-brown/70 font-medium">Add Coupon</span>
+            <svg class="w-4 h-4 text-lc-brown/30 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <div id="coupon-input" class="hidden px-4 py-2 flex gap-2 border-b border-lc-brown/8">
+            <input type="text" placeholder="Discount code" class="flex-1 border border-lc-brown/20 rounded-lg px-3 py-2 font-body text-sm focus:outline-none focus:border-lc-gold">
+            <button class="font-body text-xs uppercase tracking-wider bg-lc-brown text-white px-4 py-2 rounded-lg">Apply</button>
+          </div>
+          <div class="px-4 py-2.5 space-y-1.5">
+            <div class="flex justify-between">
+              <span class="font-body text-[13px] text-lc-brown/60" id="cart-subtotal-label">Subtotal (1 item)</span>
+              <span class="font-body text-[13px] text-lc-dark" id="cart-subtotal">$0</span>
+            </div>
+            <div class="flex justify-between" id="cart-discount-row" style="display:none;">
+              <span class="font-body text-[13px] text-green-600">Discount</span>
+              <span class="font-body text-[13px] text-green-600" id="cart-discount-amount">-$0</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-body text-[13px] text-lc-brown/60">Estimated Tax</span>
+              <span class="font-body text-[13px] text-lc-dark">$0</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="font-body text-[13px] text-lc-brown/60">Shipping</span>
+              <span class="font-body text-[13px] text-green-600 font-medium">Free</span>
+            </div>
+            <div class="flex justify-between pt-2 border-t border-lc-brown/10">
+              <span class="font-body text-sm font-medium text-lc-dark">Total</span>
+              <span class="font-body text-base font-semibold text-lc-dark" id="cart-total">$0</span>
+            </div>
+          </div>
+        </div>
+        <div class="text-center mt-3">
+          <p class="font-body text-[11px] text-lc-brown/50 mb-2">Free delivery on March 25th - April 1st</p>
+          <div class="flex items-center justify-center gap-1.5 flex-wrap">
+            <div class="w-9 h-5 bg-white rounded border border-gray-200 flex items-center justify-center"><span class="text-[6px] font-bold text-blue-800">VISA</span></div>
+            <div class="w-9 h-5 bg-white rounded border border-gray-200 flex items-center justify-center"><span class="text-[6px] font-bold text-red-500">MC</span></div>
+            <div class="w-9 h-5 bg-white rounded border border-gray-200 flex items-center justify-center"><span class="text-[6px] font-bold text-blue-500">AMEX</span></div>
+            <div class="w-9 h-5 bg-white rounded border border-gray-200 flex items-center justify-center"><span class="text-[5px] font-bold text-pink-500">Klarna</span></div>
+            <div class="w-9 h-5 bg-black rounded flex items-center justify-center"><span class="text-[6px] font-bold text-white">Pay</span></div>
+            <div class="w-9 h-5 bg-white rounded border border-gray-200 flex items-center justify-center"><span class="text-[6px] font-bold text-blue-700">PP</span></div>
+            <div class="w-9 h-5 bg-white rounded border border-gray-200 flex items-center justify-center"><span class="text-[5px] font-bold text-green-700">Shop</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Checkout buttons — ALWAYS visible at bottom -->
+    <div style="padding: 12px 20px; background: #faf7f4; border-top: 1px solid rgba(79,60,47,0.08); flex-shrink: 0;" id="cart-checkout-area">
+      <div class="flex gap-2">
+        <button class="flex-1 py-3.5 rounded-lg bg-[#5a31f4] text-white flex items-center justify-center hover:bg-[#4a28cc] transition-colors">
+          <span style="font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 0.02em;">shop</span><span style="font-family: 'Jost', sans-serif; font-size: 15px; font-weight: 300; letter-spacing: 0.02em;">pay</span>
+        </button>
+        <button class="flex-1 cart-checkout-btn">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="cart-toast" id="cart-toast">
+    <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>
+    <span class="font-body text-sm text-lc-dark" id="toast-text">Added to cart!</span>
+  </div>
+
+  <!-- Scroll reveal script -->
+  <script>
+    // ═══ Scroll Reveal ═══
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ═══ Filter Tabs ═══
+    window.filterProducts = function(category) {
+      document.querySelectorAll('.filter-tab').forEach(tab => {
+        tab.classList.toggle('active', tab.dataset.filter === category);
+      });
+      document.querySelectorAll('#product-grid .product-card').forEach(card => {
+        const cat = card.dataset.category;
+        const isHidden = card.classList.contains('hidden-row');
+        if (category === 'all') {
+          card.style.display = isHidden && !card.classList.contains('shown') ? 'none' : '';
+        } else if (cat === category) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    };
+
+    // ═══ Load More ═══
+    window.loadMoreProducts = function() {
+      document.querySelectorAll('#product-grid .hidden-row').forEach(card => {
+        card.style.display = '';
+        card.classList.add('shown');
+      });
+      document.getElementById('load-more-btn').style.display = 'none';
+    };
+
+    // ═══ Auto BG Match ═══
+    document.querySelectorAll('.product-card img[crossorigin]').forEach(img => {
+      const matchBg = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          ctx.drawImage(img, 0, 0);
+          const w = img.naturalWidth, h = img.naturalHeight;
+          const pts = [];
+          for (let i = 0; i < 10; i++) {
+            const x = Math.floor(w * (i + 0.5) / 10);
+            pts.push([x, 1], [x, h - 2]);
+          }
+          for (let i = 0; i < 6; i++) {
+            const y = Math.floor(h * (i + 0.5) / 6);
+            pts.push([1, y], [w - 2, y]);
+          }
+          const samples = pts.map(([x,y]) => {
+            const d = ctx.getImageData(x, y, 1, 1).data;
+            return [d[0], d[1], d[2]];
+          });
+          const median = ch => {
+            const vals = samples.map(s => s[ch]).sort((a,b) => a - b);
+            return vals[Math.floor(vals.length / 2)];
+          };
+          const bg = [median(0), median(1), median(2)];
+          const container = img.closest('.relative');
+          container.style.backgroundColor = `rgb(${bg[0]}, ${bg[1]}, ${bg[2]})`;
+          img.style.objectFit = 'contain';
+          img.style.transform = 'scale(1.08)';
+        } catch(e) {}
+      };
+      if (img.complete && img.naturalWidth > 0) matchBg();
+      else img.addEventListener('load', matchBg);
+    });
+
+    // ═══════════════════════════════════════════
+    // CART SYSTEM — Hey Harper style
+    // ═══════════════════════════════════════════
+    let cart = [];
+
+    // Open/close cart drawer
+    window.openCart = function() {
+      document.getElementById('cart-overlay').classList.add('open');
+      document.getElementById('cart-drawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    };
+    window.closeCart = function() {
+      document.getElementById('cart-overlay').classList.remove('open');
+      document.getElementById('cart-drawer').classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    // Add to cart
+    window.addToCart = function(name, price, img) {
+      const existing = cart.find(i => i.name === name);
+      if (existing) {
+        existing.qty++;
+      } else {
+        cart.push({ name, price, img, qty: 1 });
+      }
+      updateCart();
+      showToast(name);
+      // Open cart after short delay
+      setTimeout(() => openCart(), 400);
+    };
+
+    // Remove from cart
+    window.removeFromCart = function(name) {
+      cart = cart.filter(i => i.name !== name);
+      updateCart();
+    };
+
+    // Update qty
+    window.updateQty = function(name, delta) {
+      const item = cart.find(i => i.name === name);
+      if (item) {
+        item.qty += delta;
+        if (item.qty <= 0) cart = cart.filter(i => i.name !== name);
+      }
+      updateCart();
+    };
+
+    // Show toast
+    function showToast(name) {
+      const toast = document.getElementById('cart-toast');
+      document.getElementById('toast-text').textContent = name + ' added!';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // Update everything
+    function updateCart() {
+      const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+      const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+
+      // Badge
+      const badge = document.getElementById('cart-count-badge');
+      if (totalItems > 0) {
+        badge.style.display = 'flex';
+        badge.textContent = totalItems;
+      } else {
+        badge.style.display = 'none';
+      }
+
+      // Discount logic: 2 items = 25% off, 3+ items = 40% off
+      let discountPct = 0;
+      if (totalItems >= 3) discountPct = 40;
+      else if (totalItems >= 2) discountPct = 25;
+      const discountAmt = Math.round(subtotal * discountPct / 100);
+      const total = subtotal - discountAmt;
+
+      // Update discount progress bars (cart drawer + top slider + bottom bar)
+      updateDiscountBar(totalItems, 'cart-discount-fill', 'cart-discount-text', 'cart-ms-25', 'cart-ms-40');
+      updateTopSlider(totalItems);
+      updateBottomBar(totalItems);
+
+      // Update cart hint text
+      const hint = document.getElementById('cart-discount-hint');
+      if (totalItems === 0) hint.textContent = 'Your future stack says "add one more". Buy 2 = Get 25% off. Buy 3 = Get 40% off.';
+      else if (totalItems === 1) hint.textContent = 'Your future stack says "add one more". Buy 2 = Get 25% off. Buy 3 = Get 40% off.';
+      else if (totalItems === 2) hint.textContent = '25% applied! Add one more for 40% off!';
+      else hint.textContent = '🎉 40% off applied! You\'re saving big!';
+
+      // Cart items
+      const itemsEl = document.getElementById('cart-items');
+      const emptyEl = document.getElementById('cart-empty');
+      const footerEl = document.getElementById('cart-footer');
+      const upsellsEl = document.getElementById('cart-upsells');
+
+      if (cart.length === 0) {
+        emptyEl.style.display = 'flex';
+        itemsEl.innerHTML = '';
+        footerEl.style.display = 'none';
+        upsellsEl.style.display = 'none';
+        document.getElementById('cart-checkout-area').style.display = 'none';
+        document.getElementById('cart-total-heading').style.display = 'none';
+        document.getElementById('cart-items-wrapper').style.display = 'none';
+      } else {
+        emptyEl.style.display = 'none';
+        footerEl.style.display = 'block';
+        upsellsEl.style.display = 'block';
+        document.getElementById('cart-checkout-area').style.display = 'block';
+        document.getElementById('cart-total-heading').style.display = 'block';
+        document.getElementById('cart-items-wrapper').style.display = 'block';
+
+        itemsEl.innerHTML = cart.map(item => `
+          <div class="cart-item">
+            <div class="cart-item-img"><img src="${item.img}" alt="${item.name}"></div>
+            <div class="flex-1">
+              <div class="flex items-start justify-between mb-1">
+                <div>
+                  <p class="font-body text-sm font-semibold text-lc-dark">${item.name}</p>
+                  <p class="font-body text-[11px] text-lc-brown/40">Waterproof Gold</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mt-2">
+                <button onclick="removeFromCart('${item.name}')" class="w-7 h-7 flex items-center justify-center border border-lc-brown/15 rounded-md hover:bg-lc-warm/50 transition-colors flex-shrink-0">
+                  <svg class="w-3.5 h-3.5 text-lc-brown/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+                <div class="cart-qty-controls">
+                  <button class="cart-qty-btn" onclick="updateQty('${item.name}', -1)">−</button>
+                  <span class="cart-qty-value">${item.qty}</span>
+                  <button class="cart-qty-btn" onclick="updateQty('${item.name}', 1)">+</button>
+                </div>
+                <span class="font-body text-sm font-semibold text-lc-dark ml-auto">$${item.price * item.qty}</span>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        // Heading — Hey Harper "Your cart total is $X"
+        document.getElementById('cart-heading-text').textContent = `Your cart total is $${total}`;
+
+        // Subscribe & Save
+        document.getElementById('cart-subscribe').style.display = 'block';
+
+        // Totals
+        document.getElementById('cart-subtotal-label').textContent = `Subtotal (${totalItems} item${totalItems > 1 ? 's' : ''})`;
+        document.getElementById('cart-subtotal').textContent = `$${subtotal}`;
+        if (discountPct > 0) {
+          document.getElementById('cart-discount-row').style.display = 'flex';
+          document.getElementById('cart-discount-amount').textContent = `-$${discountAmt} (${discountPct}%)`;
+        } else {
+          document.getElementById('cart-discount-row').style.display = 'none';
+        }
+        document.getElementById('cart-total').textContent = `$${total}`;
+      }
+    }
+
+    function updateDiscountBar(count, fillId, textId, ms25Id, ms40Id) {
+      const fill = document.getElementById(fillId);
+      const text = document.getElementById(textId);
+      const ms25 = document.getElementById(ms25Id);
+      const ms40 = document.getElementById(ms40Id);
+
+      // Progress: 0 items = 0%, 1 item = 33%, 2 items = 66%, 3+ = 100%
+      let pct = 0;
+      let msg = 'Add items for discounts';
+      if (count === 0) { pct = 0; msg = 'Add items for discounts'; }
+      else if (count === 1) { pct = 33; msg = 'One more = 25% OFF'; }
+      else if (count === 2) { pct = 66; msg = 'One more = 40% OFF'; }
+      else { pct = 100; msg = '🎉 40% OFF unlocked!'; }
+
+      fill.style.width = pct + '%';
+      text.textContent = msg;
+
+      // Toggle past-half class for text color
+      if (pct > 50) fill.classList.add('past-half');
+      else fill.classList.remove('past-half');
+
+      // Milestone states
+      ms25.className = 'discount-milestone' + (count >= 2 ? ' active' : '');
+      ms40.className = 'discount-milestone' + (count >= 3 ? ' gold' : '');
+    }
+
+    // ═══ Top discount slider update ═══
+    function updateTopSlider(count) {
+      const tier25 = document.getElementById('top-tier-25');
+      const tier40 = document.getElementById('top-tier-40');
+      const label = document.getElementById('top-slider-label');
+      const t25 = tier25.querySelector('span');
+      const t40 = tier40.querySelector('span');
+
+      if (count === 0) {
+        tier25.style.background = 'transparent';
+        tier40.style.background = 'transparent';
+        t25.style.color = 'rgba(255,255,255,0.45)';
+        t40.style.color = 'rgba(255,255,255,0.45)';
+        t25.textContent = '25% off 2+';
+        t40.textContent = '40% off 3+';
+        label.textContent = 'Stack more, save more —';
+      } else if (count === 1) {
+        tier25.style.background = 'transparent';
+        tier40.style.background = 'transparent';
+        t25.style.color = 'rgba(255,255,255,0.7)';
+        t40.style.color = 'rgba(255,255,255,0.35)';
+        t25.textContent = '25% off 2+';
+        t40.textContent = '40% off 3+';
+        label.textContent = 'Add 1 more for 25% off —';
+      } else if (count === 2) {
+        tier25.style.background = '#c9a96e';
+        tier40.style.background = 'transparent';
+        t25.style.color = '#fff';
+        t40.style.color = 'rgba(255,255,255,0.5)';
+        t25.textContent = '25% ON!';
+        t40.textContent = 'Next → 40%';
+        label.textContent = '25% off applied —';
+      } else {
+        tier25.style.background = '#c9a96e';
+        tier40.style.background = '#c9a96e';
+        t25.style.color = '#fff';
+        t40.style.color = '#fff';
+        t25.textContent = '25% ✓';
+        t40.textContent = '40% ON!';
+        label.textContent = 'Max discount unlocked! —';
+      }
+    }
+
+    // ═══ Bottom bar update ═══
+    function updateBottomBar(count) {
+      const text = document.getElementById('bottom-bar-text');
+      const seg25 = document.getElementById('bottom-seg-25');
+      const seg40 = document.getElementById('bottom-seg-40');
+
+      if (count === 0) {
+        text.innerHTML = 'Stack more, save more';
+        seg25.classList.remove('lit');
+        seg40.classList.remove('lit');
+      } else if (count === 1) {
+        text.innerHTML = '+1 more = <span class="gold">25% off</span>';
+        seg25.classList.remove('lit');
+        seg40.classList.remove('lit');
+      } else if (count === 2) {
+        text.innerHTML = '<span class="gold">25%</span> on! +1 → 40%';
+        seg25.classList.add('lit');
+        seg40.classList.remove('lit');
+      } else {
+        text.innerHTML = '<span class="gold">40% off</span> unlocked ✦';
+        seg25.classList.add('lit');
+        seg40.classList.add('lit');
+      }
+    }
+
+    // ═══ Wire up all Add buttons on product cards ═══
+    document.querySelectorAll('.product-card').forEach(card => {
+      const addBtn = card.querySelector('button:last-child') || card.querySelector('.flex.items-center.gap-1\\.5');
+      const nameEl = card.querySelector('.font-medium.text-lc-dark');
+      const name = nameEl ? nameEl.textContent.trim() : 'Product';
+
+      // Get price from the card
+      let price = 0;
+      const priceEl = card.querySelector('.text-base.font-medium');
+      if (priceEl) {
+        const match = priceEl.textContent.match(/\$(\d+)/);
+        if (match) price = parseInt(match[1]);
+      }
+      // For sale items, get sale price
+      const salePrice = card.querySelector('.text-red-500');
+      if (salePrice) {
+        const match = salePrice.textContent.match(/\$(\d+)/);
+        if (match) price = parseInt(match[1]);
+      }
+      // For bundle badge price
+      const bundleBadge = card.querySelector('.badge.bg-red-500');
+      if (bundleBadge) {
+        const match = bundleBadge.textContent.match(/\$(\d+)/);
+        if (match) price = parseInt(match[1]);
+      }
+
+      // Get image
+      const img = card.querySelector('img');
+      const imgSrc = img ? img.src : '';
+
+      // Find the actual "Add" button
+      const btns = card.querySelectorAll('button');
+      btns.forEach(btn => {
+        if (btn.textContent.trim().includes('Add') && !btn.textContent.trim().includes('Wishlist')) {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            addToCart(name, price, imgSrc);
+          });
+        }
+      });
+    });
+
+    // Initialize discount bar
+    updateCart();
+  </script>
+
+</body>
+</html>
